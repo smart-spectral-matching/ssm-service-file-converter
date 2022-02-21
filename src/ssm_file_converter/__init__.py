@@ -1,1 +1,1 @@
-__version__ = '0.1.0'
+from ssm_file_converter.app import app
