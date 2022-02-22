@@ -12,3 +12,9 @@ def test_info():
         "name": "SSM File Converter Service",
         "version": "0.0.0",
     }
+
+
+def test_healthcheck():
+    response = client.get("/healthcheck")
+    assert response.status_code == 200
+    assert response.json() == {"status": "UP"}
