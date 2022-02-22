@@ -74,7 +74,7 @@ docker-coverage:
 	@docker run ssm-file-converter-development make coverage
 
 run:
-	poetry run uvicorn src.ssm_file_coverter.app:app --host=0.0.0.0
+	poetry run uvicorn src.ssm_file_converter.app:app --host=0.0.0.0
 
 lint: 
 	poetry run flake8 ./src
