@@ -1,0 +1,60 @@
+stages:
+    - build
+    - publish
+
+variables:
+    GIT_STRATEGY: clone
+
+# This import is for the func_rse_docker_* functions
+before_script:
+    - curl https://code.ornl.gov/rse-deployment/rse-sharables/raw/master/rse-bash-modules.sh -O
+    - source rse-bash-modules.sh
+    - func_rse_docker_cleanup
+
+after_script:
+    - curl https://code.ornl.gov/rse-deployment/rse-sharables/raw/master/rse-bash-modules.sh -O
+    - source rse-bash-modules.sh
+    - func_rse_docker_cleanup
+    - sudo chown -R gitlab-runner .
+
+lint:
+    stage: build
+    script:
+        - docker login --username=$CI_REGISTRY_USER --password=$CI_REGISTRY_PASSWORD $CI_REGISTRY
+        - make docker-build
+        - make docker-lint
+    tags:
+        - rse-multi-builder
+
+test:
+    stage: build
+    script:
+        - docker login --username=$CI_REGISTRY_USER --password=$CI_REGISTRY_PASSWORD $CI_REGISTRY
+        - make docker-build
+        - make docker-test
+    tags:
+        - rse-multi-builder
+
+coverage:
+    stage: build
+    script:
+        - docker login --username=$CI_REGISTRY_USER --password=$CI_REGISTRY_PASSWORD $CI_REGISTRY
+        - make docker-build
+        - make docker-coverage
+    tags:
+        - rse-multi-builder
+
+publish:
+    stage: publish
+    script: 
+        - docker login --username=$CI_REGISTRY_USER --password=$CI_REGISTRY_PASSWORD $CI_REGISTRY
+        - >
+          docker build
+          -f dockerfiles/production.Dockerfile
+          -t ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_SLUG}:${CI_COMMIT_SHORT_SHA} .
+        - docker tag ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_SLUG}:${CI_COMMIT_SHORT_SHA} ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_SLUG}:latest
+        - docker push ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_SLUG}:${CI_COMMIT_SHORT_SHA}
+        - docker push ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_SLUG}:latest
+    tags:
+        - rse-multi-builder
+
