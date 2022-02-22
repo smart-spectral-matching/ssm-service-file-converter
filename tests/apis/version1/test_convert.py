@@ -12,6 +12,3 @@ def test_convert():
         "input formats": ["rruff", "jcamp"],
         "output formats": ["json"]
     }
-
-
-
