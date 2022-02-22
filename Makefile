@@ -54,18 +54,23 @@ docker-build:
 	@docker build -t ssm-file-converter-development -f dockerfiles/development.Dockerfile .
 
 docker-run:
+	@docker build -t ssm-file-converter-development -f dockerfiles/development.Dockerfile .
 	@docker run -p 8000:8000 ssm-file-converter-development
 
 docker-run-production:
+	@docker build -t ssm-file-converter-production -f dockerfiles/production.Dockerfile .
 	@docker run -p 8000:8000 ssm-file-converter-production
 
 docker-lint:
+	@docker build -t ssm-file-converter-development -f dockerfiles/development.Dockerfile .
 	@docker run ssm-file-converter-development make lint
 
 docker-test:
+	@docker build -t ssm-file-converter-development -f dockerfiles/development.Dockerfile .
 	@docker run ssm-file-converter-development make test
 
 docker-coverage:
+	@docker build -t ssm-file-converter-development -f dockerfiles/development.Dockerfile .
 	@docker run ssm-file-converter-development make coverage
 
 run:
