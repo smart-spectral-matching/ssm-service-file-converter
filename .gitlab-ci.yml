@@ -21,7 +21,6 @@ lint:
     stage: build
     script:
         - docker login --username=$CI_REGISTRY_USER --password=$CI_REGISTRY_PASSWORD $CI_REGISTRY
-        - make docker-build
         - make docker-lint
     tags:
         - rse-multi-builder
@@ -30,7 +29,6 @@ test:
     stage: build
     script:
         - docker login --username=$CI_REGISTRY_USER --password=$CI_REGISTRY_PASSWORD $CI_REGISTRY
-        - make docker-build
         - make docker-test
     tags:
         - rse-multi-builder
@@ -39,7 +37,6 @@ coverage:
     stage: build
     script:
         - docker login --username=$CI_REGISTRY_USER --password=$CI_REGISTRY_PASSWORD $CI_REGISTRY
-        - make docker-build
         - make docker-coverage
     tags:
         - rse-multi-builder
