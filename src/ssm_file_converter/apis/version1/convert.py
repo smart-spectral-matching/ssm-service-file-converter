@@ -21,7 +21,7 @@ async def format_info():
     return response
 
 
-@convert_router.post("/json")
+@convert_router.post("/jsonld")
 async def convert_file_to_json(file: UploadFile):
     # Read upload file to local file (required for scidatalib)
     filename = f'/tmp/{time.time()}-{file.filename}'
