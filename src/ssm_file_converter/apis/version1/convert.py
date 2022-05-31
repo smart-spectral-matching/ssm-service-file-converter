@@ -1,5 +1,6 @@
 from fastapi import APIRouter, UploadFile, HTTPException
 import pathlib
+import scidatalib.io.jcamp
 import scidatalib.io.rruff
 import time
 
