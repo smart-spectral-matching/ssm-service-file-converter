@@ -128,7 +128,6 @@ async def convert_file_to_abbreviated_jsonld(file: UploadFile):
     #   dataset
     dataset = sd.get("dataset", None)
     if dataset:
-        output_dataset = dict()
 
         dataseries_list = dataset.get("dataseries", list())
         if dataseries_list:
@@ -166,7 +165,9 @@ async def convert_file_to_abbreviated_jsonld(file: UploadFile):
 
                         dataarray = parameter.get("dataarray", None)
                         if dataarray:
-                            output_parameter["numericValueArray"] = [{"numberArray": dataarray}]
+                            output_parameter["numericValueArray"] = [
+                                {"numberArray": dataarray}
+                            ]
 
                         axis = parameter.get("axis", f"axis-{i}")
                         output_dataseries_list.append({
@@ -178,6 +179,5 @@ async def convert_file_to_abbreviated_jsonld(file: UploadFile):
         output["dataseries"] = output_dataseries
 
         # TODO: need to fix that we use 'dataseries' instead of 'dataset'
-        # output_dataset["dataseries"] = output_dataseries
 
     return output

@@ -88,7 +88,7 @@ def test_convert_jcamp_to_jsonld(
     assert response.status_code == 200
     output = response.json()
 
-    # have to remove create and modified date since won't match during comparison
+    # have to remove create and modified date since won't match
     for key in ["generatedAt"]:
         output.pop(key)
         target.pop(key)
@@ -111,7 +111,7 @@ def test_convert_jcamp_to_abbreviated_json(
     assert response.status_code == 200
     output = response.json()
 
-    # have to remove create and modified date since won't match during comparison
+    # have to remove create and modified date since won't match
     for key in ["created", "modified"]:
         output.pop(key)
         target.pop(key)
