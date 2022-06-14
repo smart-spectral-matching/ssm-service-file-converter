@@ -1,4 +1,5 @@
 from fastapi.testclient import TestClient
+import json
 import pathlib
 import pytest
 
@@ -30,6 +31,24 @@ def raman_soddyite_jcamp_file():
     return p
 
 
+@pytest.fixture
+def raman_soddyite_scidata_jsonld_file():
+    """
+    SciData JSON-LD conversion of Soddyite RRUFF file above using SciDataLib
+    """
+    p = pathlib.Path(TEST_DATA_DIR, "scidata-jsonld", "raman_soddyite.jsonld")
+    return p
+
+
+@pytest.fixture
+def raman_soddyite_ssm_json_file():
+    """
+    SSM abbreviated JSON conversion of Soddyite RRUFF file above
+    """
+    p = pathlib.Path(TEST_DATA_DIR, "ssm-json", "raman_soddyite.json")
+    return p
+
+
 def test_convert():
     response = client.get("/convert")
     assert response.status_code == 200
@@ -54,15 +73,47 @@ def test_convert_rruff_to_jsonld(raman_soddyite_rruff_file):
     assert "dataset" in scidata.get("scidata")
 
 
-def test_convert_jcamp_to_jsonld(raman_soddyite_jcamp_file):
+def test_convert_jcamp_to_jsonld(
+    raman_soddyite_jcamp_file,
+    raman_soddyite_scidata_jsonld_file,
+):
+    # target ssm json file
+    with open(raman_soddyite_scidata_jsonld_file.absolute(), "rb") as f:
+        target = json.load(f)
+
+    # post jcamp file to convert to scidata jsonld
     with open(raman_soddyite_jcamp_file.absolute(), 'rb') as f:
         files = {"file": (raman_soddyite_jcamp_file.name, f)}
         response = client.post("/convert/jsonld", files=files)
     assert response.status_code == 200
+    output = response.json()
 
-    scidata = response.json().get("@graph")
-    assert scidata.get("title") == "Soddyite"
-    assert scidata.get("uid") == "scidata:jcamp:jsonld"
-    assert "scidata" in scidata
-    assert "methodology" in scidata.get("scidata")
-    assert "dataset" in scidata.get("scidata")
+    # have to remove create and modified date since won't match during comparison
+    for key in ["generatedAt"]:
+        output.pop(key)
+        target.pop(key)
+
+    assert sorted(output.items()) == sorted(target.items())
+
+
+def test_convert_jcamp_to_abbreviated_json(
+    raman_soddyite_jcamp_file,
+    raman_soddyite_ssm_json_file,
+):
+    # target ssm json file
+    with open(raman_soddyite_ssm_json_file.absolute(), "rb") as f:
+        target = json.load(f)
+
+    # post jcamp file to convert to ssm json
+    with open(raman_soddyite_jcamp_file.absolute(), 'rb') as f:
+        files = {"file": (raman_soddyite_jcamp_file.name, f)}
+        response = client.post("/convert/json", files=files)
+    assert response.status_code == 200
+    output = response.json()
+
+    # have to remove create and modified date since won't match during comparison
+    for key in ["created", "modified"]:
+        output.pop(key)
+        target.pop(key)
+
+    assert sorted(output.items()) == sorted(target.items())
