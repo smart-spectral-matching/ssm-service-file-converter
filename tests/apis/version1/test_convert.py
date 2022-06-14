@@ -6,6 +6,7 @@ import pytest
 from ssm_file_converter import app
 from tests import TEST_DATA_DIR
 
+FILE_ARG = "upload_file"
 client = TestClient(app)
 
 
@@ -60,7 +61,7 @@ def test_convert():
 
 def test_convert_rruff_to_jsonld(raman_soddyite_rruff_file):
     with open(raman_soddyite_rruff_file.absolute(), 'rb') as f:
-        files = {"file": (raman_soddyite_rruff_file.name, f)}
+        files = {FILE_ARG: (raman_soddyite_rruff_file.name, f)}
         response = client.post("/convert/jsonld", files=files)
     assert response.status_code == 200
 
@@ -83,7 +84,7 @@ def test_convert_jcamp_to_jsonld(
 
     # post jcamp file to convert to scidata jsonld
     with open(raman_soddyite_jcamp_file.absolute(), 'rb') as f:
-        files = {"file": (raman_soddyite_jcamp_file.name, f)}
+        files = {FILE_ARG: (raman_soddyite_jcamp_file.name, f)}
         response = client.post("/convert/jsonld", files=files)
     assert response.status_code == 200
     output = response.json()
@@ -106,7 +107,7 @@ def test_convert_jcamp_to_abbreviated_json(
 
     # post jcamp file to convert to ssm json
     with open(raman_soddyite_jcamp_file.absolute(), 'rb') as f:
-        files = {"file": (raman_soddyite_jcamp_file.name, f)}
+        files = {FILE_ARG: (raman_soddyite_jcamp_file.name, f)}
         response = client.post("/convert/json", files=files)
     assert response.status_code == 200
     output = response.json()
