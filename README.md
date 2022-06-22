@@ -28,12 +28,12 @@ make docker-run
 
 Submit the JCAMP-DX test data to the API and convert to SciData JSON-LD format:
 ```
-curl -X POST -F "file=@tests/data/jcamp/raman_soddyite.jdx" http://localhost:8000/convert/jsonld
+curl -X POST -F "upload_file=@tests/data/jcamp/raman_soddyite.jdx" http://localhost:8000/convert/jsonld
 ```
 
 Submit the RRUFF test data to the API and convert to SSM JSON format:
 ```
-curl -X POST -F "file=@tests/data/rruff/raman_soddyite.rruff" http://localhost:8000/convert/json
+curl -X POST -F "upload_file=@tests/data/rruff/raman_soddyite.rruff" http://localhost:8000/convert/json
 ```
 
 [jcamp]: http://stuchalk.github.io/scidata/
