@@ -20,7 +20,7 @@ def scidata_to_ssm_json(scidata: SciData) -> dict:
 
         evaulation = methodology.get("evaluation", None)
         if evaulation:
-            output_methodology["evaultionMethod"] = evaulation
+            output_methodology["evaluationMethod"] = evaulation
 
         aspects_list = methodology.get("aspects", list())
         if aspects_list:
@@ -71,6 +71,10 @@ def scidata_to_ssm_json(scidata: SciData) -> dict:
                 if label:
                     output_dataseries["label"] = label
 
+                axisType = dataseries.get("axisType", None)
+                if axisType:
+                    output_dataseries["axisType"] = axisType
+
                 parameter_list = dataseries.get("parameter", None)
                 if parameter_list:
                     for i, parameter in enumerate(parameter_list):
@@ -90,6 +94,10 @@ def scidata_to_ssm_json(scidata: SciData) -> dict:
                         units = parameter.get("units", None)
                         if units:
                             output_parameter["units"] = units
+
+                        unitref = parameter.get("unitref", None)
+                        if unitref:
+                            output_parameter["unitref"] = unitref
 
                         datatype = parameter.get("datatype", None)
                         if datatype:
