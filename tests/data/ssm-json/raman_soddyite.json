@@ -13,6 +13,7 @@
           "quantity": "Wave Numbers",
           "property": "Wave Numbers",
           "units": "1/cm",
+          "unitref": "qudt:PER-CentiM",
           "datatype": "decimal",
           "numericValueArray": [
             {
