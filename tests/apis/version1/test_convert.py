@@ -54,8 +54,8 @@ def test_convert():
     response = client.get("/convert")
     assert response.status_code == 200
     assert response.json() == {
-        "input formats": ["rruff", "jcamp"],
-        "output formats": ["json"]
+        "input formats": ["rruff", "jcamp", "json-ld"],
+        "output formats": ["json", "json-ld"]
     }
 
 
