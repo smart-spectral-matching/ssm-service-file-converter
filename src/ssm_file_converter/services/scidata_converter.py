@@ -5,6 +5,8 @@ import scidatalib.io.rruff
 from scidatalib.scidata import SciData
 from typing import Union
 
+from .ssm_json_converter import ssm_json_to_scidata
+
 
 _DEFAULT_UID = "scidata:jsonld"
 
@@ -26,5 +28,10 @@ def filename_to_scidata(filename: str) -> Union[SciData, None]:
 
     if file_extension in [".jdx", ".jcamp"]:
         scidata = scidatalib.io.jcamp.read_jcamp(filename)
+
+    if file_extension == ".json":
+        with open(filename, "r") as f:
+            data = json.load(f)
+            scidata = ssm_json_to_scidata(data)
 
     return scidata
