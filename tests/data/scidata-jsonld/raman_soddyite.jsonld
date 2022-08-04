@@ -55,7 +55,7 @@
         "evaluation": "",
         "aspects": [
           {
-            "@id": "measurement/1/1/",
+            "@id": "measurement/1/",
             "@type": "sdo:measurement",
             "techniqueType": "cao:spectroscopy",
             "instrument": "Unknown"
