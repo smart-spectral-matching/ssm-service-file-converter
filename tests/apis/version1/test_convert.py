@@ -128,9 +128,32 @@ def test_convert_jsonld_to_abbreviated_json(
     with open(raman_soddyite_ssm_json_file.absolute(), "rb") as f:
         target = json.load(f)
 
-    # post jcamp file to convert to scidata jsonld
+    # post jsonld file to convert to ssm json
     with open(raman_soddyite_scidata_jsonld_file.absolute(), 'rb') as f:
         files = {FILE_ARG: (raman_soddyite_scidata_jsonld_file.name, f)}
+        response = client.post("/convert/json", files=files)
+    assert response.status_code == 200
+    output = response.json()
+
+    # have to remove create and modified date since won't match
+    for key in ["created", "modified"]:
+        output.pop(key)
+        target.pop(key)
+
+    assert sorted(output.items()) == sorted(target.items())
+
+
+def test_convert_abbreviated_json_to_jsonld(
+    raman_soddyite_ssm_json_file,
+    raman_soddyite_scidata_jsonld_file,
+):
+    # target jsonld file
+    with open(raman_soddyite_scidata_jsonld_file.absolute(), 'rb') as f:
+        target = json.load(f)
+
+    # post ssm json file to convert to jsonld
+    with open(raman_soddyite_ssm_json_file.absolute(), "rb") as f:
+        files = {FILE_ARG: (raman_soddyite_ssm_json_file.name, f)}
         response = client.post("/convert/json", files=files)
     assert response.status_code == 200
     output = response.json()
