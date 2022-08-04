@@ -95,7 +95,8 @@ def test_convert_jcamp_to_jsonld(
         target.pop(key)
 
     # Hack to get around SciDataLib error
-    target["@graph"]["scidata"]["methodology"]["aspects"][0]["@id"] = "measurement/1/1/"
+    target_aspects = target["@graph"]["scidata"]["methodology"]["aspects"]
+    target_aspects[0]["@id"] = "measurement/1/1/"
 
     assert sorted(output.items()) == sorted(target.items())
 

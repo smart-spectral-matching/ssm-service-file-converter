@@ -147,7 +147,6 @@ def ssm_json_to_scidata(ssm_json: dict) -> SciData:
         elif "evaluation" in methodology:
             sd.evaulation(methodology.get("evaluation"))
 
-
         # aspects
         aspects = list()
         if "aspects" in methodology:
@@ -190,7 +189,8 @@ def ssm_json_to_scidata(ssm_json: dict) -> SciData:
             sd.aspects(aspects)
 
     #   dataset
-    # TODO: need to fix that we use 'dataseries' instead of 'dataset' (add .get("dataset"))
+    # TODO: need to fix that we use 'dataseries' instead of 'dataset'
+    # (i.e. need ssm_json.get("dataset"))
     dataset = ssm_json
 
     dataseries_list = dataset.get("dataseries", None)
