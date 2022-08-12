@@ -1,5 +1,6 @@
 from fastapi.testclient import TestClient
 import json
+import pathlib
 
 from ssm_file_converter import app
 
@@ -7,7 +8,7 @@ FILE_ARG = "upload_file"
 client = TestClient(app)
 
 
-def test_convert():
+def test_convert() -> None:
     response = client.get("/convert")
     assert response.status_code == 200
     assert response.json() == {
@@ -16,7 +17,9 @@ def test_convert():
     }
 
 
-def test_convert_rruff_to_jsonld(raman_soddyite_rruff_file):
+def test_convert_rruff_to_jsonld(
+    raman_soddyite_rruff_file: pathlib.Path
+) -> None:
     with open(raman_soddyite_rruff_file.absolute(), 'rb') as f:
         files = {FILE_ARG: (raman_soddyite_rruff_file.name, f)}
         response = client.post("/convert/jsonld", files=files)
@@ -32,9 +35,9 @@ def test_convert_rruff_to_jsonld(raman_soddyite_rruff_file):
 
 
 def test_convert_jcamp_to_jsonld(
-    raman_soddyite_jcamp_file,
-    raman_soddyite_scidata_jsonld_file,
-):
+    raman_soddyite_jcamp_file: pathlib.Path,
+    raman_soddyite_scidata_jsonld_file: pathlib.Path,
+) -> None:
     # target ssm json file
     with open(raman_soddyite_scidata_jsonld_file.absolute(), "rb") as f:
         target = json.load(f)
@@ -59,9 +62,9 @@ def test_convert_jcamp_to_jsonld(
 
 
 def test_convert_jcamp_to_abbreviated_json(
-    raman_soddyite_jcamp_file,
-    raman_soddyite_ssm_json_file,
-):
+    raman_soddyite_jcamp_file: pathlib.Path,
+    raman_soddyite_ssm_json_file: pathlib.Path,
+) -> None:
     # target ssm json file
     with open(raman_soddyite_ssm_json_file.absolute(), "rb") as f:
         target = json.load(f)
@@ -82,9 +85,9 @@ def test_convert_jcamp_to_abbreviated_json(
 
 
 def test_convert_jsonld_to_abbreviated_json(
-    raman_soddyite_scidata_jsonld_file,
-    raman_soddyite_ssm_json_file,
-):
+    raman_soddyite_scidata_jsonld_file: pathlib.Path,
+    raman_soddyite_ssm_json_file: pathlib.Path,
+) -> None:
     # target ssm json file
     with open(raman_soddyite_ssm_json_file.absolute(), "rb") as f:
         target = json.load(f)
@@ -105,9 +108,9 @@ def test_convert_jsonld_to_abbreviated_json(
 
 
 def test_convert_abbreviated_json_to_jsonld(
-    raman_soddyite_ssm_json_file,
-    raman_soddyite_scidata_jsonld_file,
-):
+    raman_soddyite_ssm_json_file: pathlib.Path,
+    raman_soddyite_scidata_jsonld_file: pathlib.Path,
+) -> None:
     # target jsonld file
     with open(raman_soddyite_scidata_jsonld_file.absolute(), 'rb') as f:
         target = json.load(f)
