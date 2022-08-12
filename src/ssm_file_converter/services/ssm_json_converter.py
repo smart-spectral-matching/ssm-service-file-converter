@@ -14,6 +14,7 @@ def scidata_to_ssm_json(scidata: SciData) -> dict:
 
     sd = scidata.output["@graph"]["scidata"]
 
+    output["scidata"] = dict()
     #   methodology
     methodology = sd.get("methodology", None)
 
@@ -37,7 +38,7 @@ def scidata_to_ssm_json(scidata: SciData) -> dict:
                     for k, v in aspect_dict.items():
                         output_methodology[k] = v
 
-        output["methodology"] = output_methodology
+        output["scidata"]["methodology"] = output_methodology
 
     #   system
     system = sd.get("system", None)
@@ -57,7 +58,7 @@ def scidata_to_ssm_json(scidata: SciData) -> dict:
                     for k, v in facet_dict.items():
                         output_system[k] = v
 
-        output["system"] = output_system
+        output["scidata"]["system"] = output_system
 
     #   dataset
     dataset = sd.get("dataset", None)
@@ -118,7 +119,7 @@ def scidata_to_ssm_json(scidata: SciData) -> dict:
                         })
 
         output_dataseries = output_dataseries_list
-        output["dataseries"] = output_dataseries
+        output["scidata"]["dataseries"] = output_dataseries
         # TODO: need to fix that we use 'dataseries' instead of 'dataset'
 
     return output
@@ -131,7 +132,6 @@ def ssm_json_to_scidata(ssm_json: dict) -> SciData:
     # Construct UID for SciData document from title
     title = ssm_json.get("title", "ssm:dataset")
     uid = ssm_json.get("uid", f'scidata:jsonld:{title}')
-    print(ssm_json.keys())
 
     # Setup SciData object
     sd = SciData(uid)
@@ -139,7 +139,7 @@ def ssm_json_to_scidata(ssm_json: dict) -> SciData:
     sd.docid = ssm_json.get("url", "")
 
     #   methodology
-    methodology = ssm_json.get("methodology")
+    methodology = ssm_json.get("scidata").get("methodology")
 
     if methodology:
         if "evaluationMethod" in methodology:
@@ -178,7 +178,7 @@ def ssm_json_to_scidata(ssm_json: dict) -> SciData:
             sd.aspects(aspects)
 
     #   system
-    system = ssm_json.get("system", None)
+    system = ssm_json.get("scidata").get("system", None)
 
     if system:
         if "facets" in system:
@@ -190,8 +190,8 @@ def ssm_json_to_scidata(ssm_json: dict) -> SciData:
 
     #   dataset
     # TODO: need to fix that we use 'dataseries' instead of 'dataset'
-    # (i.e. need ssm_json.get("dataset"))
-    dataset = ssm_json
+    # (i.e. need ssm_json.get("scidata").get("dataset"))
+    dataset = ssm_json.get("scidata")
 
     dataseries_list = dataset.get("dataseries", None)
     if dataseries_list:
