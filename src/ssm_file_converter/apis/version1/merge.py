@@ -1,7 +1,8 @@
-from fastapi import APIRouter, UploadFile, HTTPException
+from fastapi import APIRouter, UploadFile
 import time
 from typing import List
 
+from ssm_file_converter.services import merge_data_from_filenames
 
 merge_router = APIRouter()
 
@@ -37,4 +38,3 @@ async def merge_to_scidata_jsonld(upload_files: List[UploadFile]) -> dict:
     filenames = await write_files(upload_files)
     merged = merge_data_from_filenames(filenames)
     return merged
-
