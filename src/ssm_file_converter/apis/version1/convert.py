@@ -23,7 +23,7 @@ async def write_file(upload_file: UploadFile) -> str:
 
 
 @convert_router.get("/")
-async def format_info():
+async def format_info() -> dict:
     response = {
         "input formats": INPUT_FILE_FORMAT_TYPES,
         "output formats": OUTPUT_FILE_FORMAT_TYPES
@@ -32,7 +32,7 @@ async def format_info():
 
 
 @convert_router.post("/jsonld")
-async def convert_file_to_scidata_jsonld(upload_file: UploadFile):
+async def convert_file_to_scidata_jsonld(upload_file: UploadFile) -> dict:
     filename = await write_file(upload_file)
     scidata = filename_to_scidata(filename)
 
@@ -47,7 +47,7 @@ async def convert_file_to_scidata_jsonld(upload_file: UploadFile):
 
 
 @convert_router.post("/json")
-async def convert_file_to_abbreviated_jsonld(upload_file: UploadFile):
+async def convert_file_to_abbreviated_jsonld(upload_file: UploadFile) -> dict:
     filename = await write_file(upload_file)
     scidata = filename_to_scidata(filename)
 
