@@ -6,6 +6,7 @@ from typing import List
 
 logging.basicConfig(level=logging.WARNING)
 
+
 def _get_file_type(filenames: List[str], file_type: str = "") -> str:
     output = None
     for filename in filenames:
@@ -20,18 +21,22 @@ def _get_file_type(filenames: List[str], file_type: str = "") -> str:
     return output
 
 
+def _without_keys(d: dict, keys: list) -> dict:
+    return {x: d[x] for x in d if x not in keys}
+
+
 def get_new_data(filenames: List[str]) -> dict:
     json_filename = _get_file_type(filenames, file_type=".json")
     with open(json_filename, "r") as f:
         new_data = json.load(f)
-    return new_data 
+    return new_data
 
 
 def get_original_data(filenames: List[str]) -> dict:
     jsonld_filename = _get_file_type(filenames, file_type=".jsonld")
     with open(jsonld_filename, "r") as f:
         original_data = json.load(f)
-    return original_data 
+    return original_data
 
 
 def merge_data_from_filenames(filenames: List[str]) -> dict:
@@ -43,7 +48,7 @@ def merge_data_from_filenames(filenames: List[str]) -> dict:
         graph["title"] = json_data.get("title")
 
     if "url" in json_data:
-        jsonld_data["@id"] = url
+        jsonld_data["@id"] = json_data.get("url")
 
     scidata = jsonld_data["@graph"]["scidata"]
     scidata_json = json_data["scidata"]
@@ -56,7 +61,8 @@ def merge_data_from_filenames(filenames: List[str]) -> dict:
         methodology_json = scidata_json.get("methodology")
 
         if "evaluationMethod" in methodology_json:
-            methodology["evaluation"] = methodology_json.get("evaluationMethod")
+            evaluationMethod = methodology_json.get("evaluationMethod")
+            methodology["evaluation"] = evaluationMethod
 
         if "aspects" in methodology_json:
             aspects_list = methodology.get("aspects", list())
@@ -68,8 +74,8 @@ def merge_data_from_filenames(filenames: List[str]) -> dict:
 
                 for aspect in aspects_list:
                     keys = ["@id", "@type"]
-                    aspect_stripped = {x: d[x] for x in d if x not in keys}
-                    if aspect_stripped == aspect:
+                    aspect_stripped = _without_keys(aspect, keys)
+                    if aspect_stripped == aspect_json:
                         matched = True
 
                 if not matched:
@@ -81,7 +87,8 @@ def merge_data_from_filenames(filenames: List[str]) -> dict:
             methodology["aspects"] = aspects_list
 
         if "hasMethodologyAspect" in methodology_json:
-            logging.warning('Cannot parse "hasMethodologyAspect" in methodology, skipping...')
+            warning = 'Cannot parse "hasMethodologyAspect", skipping...'
+            logging.warning(warning)
 
     if "system" in scidata_json:
         if "system" not in scidata:
@@ -97,10 +104,10 @@ def merge_data_from_filenames(filenames: List[str]) -> dict:
 
             for facet_json in facets_list_json:
                 matched = False
-                for facets in facets_list:
+                for facet in facets_list:
                     keys = ["@id", "@type"]
-                    facets_stripped = {x: d[x] for x in d if x not in keys}
-                    if facets_stripped == facets:
+                    facet_stripped = _without_keys(facet, keys)
+                    if facet_stripped == facet_json:
                         matched = True
 
                 if not matched:
