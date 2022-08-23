@@ -2,7 +2,21 @@
   "title": "Soddyite",
   "created": "06-14-22 13:47:18",
   "modified": "06-14-22 13:47:18",
+  "sources": [
+    {
+      "citation": "Highlights in Mineralogical Crystallography 2015 1-30",
+      "reftype": "journal article",
+      "doi": "10.1515/9783110417104-003",
+      "url": "https://doi.org/10.1515/9783110417104-003"
+    },
+    {
+      "citation": "RRUFF project database entry",
+      "url": "https://rruff.info/R060361"
+    }
+  ],
+  "description": "JCAMP-DX: None;XYDATA: (XY..XY)",
   "scidata": {
+      "property": "raman spectroscopy",
       "methodology": {
         "techniqueType": "cao:spectroscopy",
         "instrument": "Unknown"
