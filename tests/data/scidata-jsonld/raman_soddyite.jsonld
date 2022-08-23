@@ -47,6 +47,9 @@
     "scidata": {
       "@id": "scidata/",
       "@type": "sdo:scientificData",
+      "property": [
+        "raman spectroscopy"
+      ],
       "discipline": "w3i:Chemistry",
       "subdiscipline": "w3i:AnalyticalChemistry",
       "methodology": {
@@ -5122,7 +5125,16 @@
       {
         "@id": "source/1",
         "@type": "dc:source",
-        "citation": "Highlights in Mineralogical Crystallography 2015 1-30"
+        "citation": "Highlights in Mineralogical Crystallography 2015 1-30",
+        "reftype": "journal article",
+        "doi": "10.1515/9783110417104-003",
+        "url": "https://doi.org/10.1515/9783110417104-003"
+      },
+      {
+        "@id": "source/2",
+        "@type": "dc:source",
+        "citation": "RRUFF project database entry",
+        "url": "https://rruff.info/R060361"
       }
     ]
   }
