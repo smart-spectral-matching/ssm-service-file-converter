@@ -11,10 +11,29 @@ def scidata_to_ssm_json(scidata: SciData) -> dict:
         output["url"] = scidata.output["@id"]
     output["created"] = scidata.output["generatedAt"]
     output["modified"] = scidata.output["generatedAt"]
+    output["description"] = scidata.output["@graph"]["description"]
+
+    # sources
+    if "sources" in scidata.output["@graph"]:
+        sources_list = scidata.output["@graph"]["sources"]
+        output_sources_list = list()
+        for source in sources_list:
+            source.pop("@id")
+            source.pop("@type")
+            output_sources_list.append(source)
+
+        output["sources"] = output_sources_list
 
     sd = scidata.output["@graph"]["scidata"]
 
     output["scidata"] = dict()
+
+    #   property
+    properties = sd.get("property", None)
+    if properties:
+        properties = ','.join(properties)
+        output["scidata"]["property"] = properties
+
     #   methodology
     methodology = sd.get("methodology", None)
 
@@ -137,6 +156,20 @@ def ssm_json_to_scidata(ssm_json: dict) -> SciData:
     sd = SciData(uid)
     sd.title = title
     sd.docid = ssm_json.get("url", "")
+
+    #   sources
+    sources = ssm_json.get("sources", list())
+    if sources:
+        for source in sources:
+            source["@id"] = "source"
+            source["@type"] = "dc:source"
+        sd.sources(sources)
+
+    properties = ssm_json.get("scidata").get("property", "").split(",")
+    sd.meta['@graph']['scidata']['property'] = properties
+
+    description = ssm_json.get("description", "")
+    sd.description(description)
 
     #   methodology
     methodology = ssm_json.get("scidata").get("methodology")
