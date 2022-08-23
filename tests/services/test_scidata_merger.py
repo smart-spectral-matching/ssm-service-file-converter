@@ -8,12 +8,13 @@ from ssm_file_converter.services.scidata_merger import (
     get_new_data,
     get_original_data,
     merge_data_from_filenames,
+    UUIDsDoNotMatchException,
 )
 
 
-@pytest.fixture(name="json_filename")
-def fixture__json_filename() -> str:
-    new_data = {
+@pytest.fixture(name="json_data")
+def fixture__json_data() -> dict:
+    json_data = {
         "title": "NEW TITLE",
         "scidata": {
             "system": {
@@ -23,12 +24,16 @@ def fixture__json_filename() -> str:
             }
         }
     }
+    return json_data
+
+
+def create_json_file(data: dict) -> str:
     json_file = tempfile.NamedTemporaryFile(
         mode="w",
         suffix=".json",
         delete=False
     )
-    json.dump(new_data, json_file)
+    json.dump(data, json_file)
     json_file.flush()
     return json_file.name
 
@@ -44,13 +49,15 @@ def test_without_keys() -> None:
     assert _without_keys(a, ["foo"]) == {"bar": 2}
 
 
-def test_get_file_type(jsonld_filename, json_filename) -> None:
+def test_get_file_type(jsonld_filename: str, json_data: dict) -> None:
+    json_filename = create_json_file(json_data)
     filenames = [jsonld_filename, json_filename]
     assert _get_file_type(filenames, file_type=".jsonld") == jsonld_filename
     assert _get_file_type(filenames, file_type=".json") == json_filename
 
 
-def test_get_new_data(jsonld_filename, json_filename) -> None:
+def test_get_new_data(jsonld_filename: str, json_data: dict) -> None:
+    json_filename = create_json_file(json_data)
     filenames = [jsonld_filename, json_filename]
     output = get_new_data(filenames)
 
@@ -70,7 +77,8 @@ def test_get_new_data_bad_filenames() -> None:
         get_new_data(filenames)
 
 
-def test_get_original_data(jsonld_filename, json_filename) -> None:
+def test_get_original_data(jsonld_filename: str, json_data: dict) -> None:
+    json_filename = create_json_file(json_data)
     filenames = [jsonld_filename, json_filename]
     output = get_original_data(filenames)
 
@@ -90,7 +98,11 @@ def test_get_original_data_bad_filenames() -> None:
         get_original_data(filenames)
 
 
-def test_merge_data_from_filenames(jsonld_filename, json_filename) -> None:
+def test_merge_data_from_filenames(
+    jsonld_filename: str,
+    json_data: dict,
+) -> None:
+    json_filename = create_json_file(json_data)
     filenames = [jsonld_filename, json_filename]
     output = merge_data_from_filenames(filenames)
 
@@ -110,3 +122,37 @@ def test_merge_data_from_filenames(jsonld_filename, json_filename) -> None:
         graph.pop("title")
 
     assert sorted(output.items()) == sorted(target.items())
+
+
+def test_merge_data_from_filenames_with_uuid(
+    jsonld_filename: str,
+    json_data: dict
+) -> None:
+    json_data["uuid"] = "FOO"
+    json_filename = create_json_file(json_data)
+    filenames = [jsonld_filename, json_filename]
+    output = merge_data_from_filenames(filenames)
+    assert output["@id"] == json_data["uuid"]
+
+
+def test_merge_data_from_filenames_with_url(
+    jsonld_filename: str,
+    json_data: dict
+) -> None:
+    json_data["url"] = "https://path.to.url/FOO"
+    json_filename = create_json_file(json_data)
+    filenames = [jsonld_filename, json_filename]
+    output = merge_data_from_filenames(filenames)
+    assert output["@id"] == json_data["url"]
+
+
+def test_merge_data_from_filenames_exception_uuids_not_matching(
+    jsonld_filename: str,
+    json_data: dict
+) -> None:
+    json_data["uuid"] = "FOO"
+    json_data["url"] = "https://url.to.data/BAR"
+    json_filename = create_json_file(json_data)
+    filenames = [jsonld_filename, json_filename]
+    with pytest.raises(UUIDsDoNotMatchException):
+        merge_data_from_filenames(filenames)
