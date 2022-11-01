@@ -22,6 +22,10 @@ endef
 export PRINT_HELP_PYSCRIPT
 
 BROWSER := python -c "$$BROWSER_PYSCRIPT"
+PRODUCTION_CONTAINER=ssm-file-converter-production
+DEVELOPMENT_CONTAINER=ssm-file-converter-development
+PRODUCTION_IMAGE=$(PRODUCTION_CONTAINER)-image
+DEVELOPMENT_IMAGE=$(DEVELOPMENT_CONTAINER)-image
 
 help:
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
@@ -47,31 +51,39 @@ clean-test:
 	rm -fr htmlcov/
 	rm -fr .pytest_cache
 
+clean-docker: clean-docker-containers clean-docker-images
+
+clean-docker-images:
+	docker rmi -f $(PRODUCTION_IMAGE)
+	docker rmi -f $(DEVELOPMENT_IMAGE)
+
+clean-docker-containers:
+	docker rm -f $(PRODUCTION_CONTAINER)
+	docker rm -f $(DEVELOPMENT_CONTAINER)
+
+docker-build-development:
+	@docker build -t $(DEVELOPMENT_IMAGE) --target=development .
+
 docker-build-production:
-	@docker build -t ssm-file-converter-production -f dockerfiles/production.Dockerfile .
+	@docker build -t $(PRODUCTION_IMAGE) --target=production .
 
-docker-build:
-	@docker build -t ssm-file-converter-development -f dockerfiles/development.Dockerfile .
+docker-run-development: clean-docker-containers docker-build-development
+	@docker run -p 8000:8000 --name=$(DEVELOPMENT_CONTAINER) $(DEVELOPMENT_IMAGE)
 
-docker-run:
-	@docker build -t ssm-file-converter-development -f dockerfiles/development.Dockerfile .
-	@docker run -p 8000:8000 ssm-file-converter-development
+docker-run-production: clean-docker-containers docker-build-production
+	@docker run -p 8000:8000 --name=$(PRODUCTION_CONTAINER) $(PRODUCTION_IMAGE)
 
-docker-run-production:
-	@docker build -t ssm-file-converter-production -f dockerfiles/production.Dockerfile .
-	@docker run -p 8000:8000 ssm-file-converter-production
+docker-lint: clean-docker-containers docker-build-development
+	@docker run --name=$(DEVELOPMENT_CONTAINER) $(DEVELOPMENT_IMAGE) make lint
 
-docker-lint:
-	@docker build -t ssm-file-converter-development -f dockerfiles/development.Dockerfile .
-	@docker run ssm-file-converter-development make lint
+docker-test: clean-docker-containers docker-build-development
+	@docker run --name=$(DEVELOPMENT_CONTAINER) $(DEVELOPMENT_IMAGE) make test
 
-docker-test:
-	@docker build -t ssm-file-converter-development -f dockerfiles/development.Dockerfile .
-	@docker run ssm-file-converter-development make test
+docker-coverage: clean-docker-containers docker-build-development
+	@docker run --name=$(DEVELOPMENT_CONTAINER) $(DEVELOPMENT_IMAGE) make coverage
 
-docker-coverage:
-	@docker build -t ssm-file-converter-development -f dockerfiles/development.Dockerfile .
-	@docker run ssm-file-converter-development make coverage
+docker-full-check: clean-docker-containers docker-build-development
+	@docker run --name=$(DEVELOPMENT_CONTAINER) $(DEVELOPMENT_IMAGE) make full-check
 
 run:
 	poetry run uvicorn src.ssm_file_converter.app:app --host=0.0.0.0
@@ -88,3 +100,4 @@ coverage:
 	poetry run coverage report -m
 	poetry run coverage html
 
+full-check: lint test coverage
