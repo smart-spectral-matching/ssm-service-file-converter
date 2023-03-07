@@ -21,8 +21,35 @@ jobs:
         name: Lint
         run: make docker-lint
 
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      - 
+        name: Lint
+        run: make docker-test
 
-  push-container-image:
+  coverage:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      - 
+        name: Lint
+        run: make docker-coverage
+
+  publish-container-image:
     strategy:
       fail-fast: false
       matrix:
