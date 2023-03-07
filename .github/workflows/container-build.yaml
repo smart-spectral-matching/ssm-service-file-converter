@@ -1,4 +1,4 @@
-name: Build container image
+name: Code checks
  
 on:
   push:
@@ -6,12 +6,29 @@ on:
       - '*'
 
 jobs:
-  container-image:
+
+  lint:
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      - 
+        name: Lint
+        run: make docker-lint
+
+
+  push-container-image:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    needs: [lint]
     steps:
       -
         name: Checkout
