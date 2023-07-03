@@ -102,6 +102,30 @@ requires_python = ">=3.7"
 summary = "A pure-Python, bring-your-own-I/O implementation of HTTP/1.1"
 
 [[package]]
+name = "httpcore"
+version = "0.17.2"
+requires_python = ">=3.7"
+summary = "A minimal low-level HTTP client."
+dependencies = [
+    "anyio<5.0,>=3.0",
+    "certifi",
+    "h11<0.15,>=0.13",
+    "sniffio==1.*",
+]
+
+[[package]]
+name = "httpx"
+version = "0.24.1"
+requires_python = ">=3.7"
+summary = "The next generation HTTP client."
+dependencies = [
+    "certifi",
+    "httpcore<0.18.0,>=0.15.0",
+    "idna",
+    "sniffio",
+]
+
+[[package]]
 name = "idna"
 version = "3.4"
 requires_python = ">=3.5"
@@ -293,8 +317,8 @@ summary = "Measures the displayed width of unicode strings in a terminal"
 [metadata]
 lock_version = "4.2"
 cross_platform = true
-groups = ["default", "dev"]
-content_hash = "sha256:93dc1219edbbe02a59b33803c25912e7643040fff234719685372f29199391ee"
+groups = ["default", "dev", "test"]
+content_hash = "sha256:86b6c8298f19eac6bd94c10453804c9f0ff06b9f0d3c0c54baa9bb7e8d1d36cc"
 
 [metadata.files]
 "anyio 3.7.0" = [
@@ -468,6 +492,14 @@ content_hash = "sha256:93dc1219edbbe02a59b33803c25912e7643040fff234719685372f291
 "h11 0.14.0" = [
     {url = "https://files.pythonhosted.org/packages/95/04/ff642e65ad6b90db43e668d70ffb6736436c7ce41fcc549f4e9472234127/h11-0.14.0-py3-none-any.whl", hash = "sha256:e3fe4ac4b851c468cc8363d500db52c2ead036020723024a109d37346efaa761"},
     {url = "https://files.pythonhosted.org/packages/f5/38/3af3d3633a34a3316095b39c8e8fb4853a28a536e55d347bd8d8e9a14b03/h11-0.14.0.tar.gz", hash = "sha256:8f19fbbe99e72420ff35c00b27a34cb9937e902a8b810e2c88300c6f0a3b699d"},
+]
+"httpcore 0.17.2" = [
+    {url = "https://files.pythonhosted.org/packages/4d/32/b908f673ccef12b6425b848a541264ee3d95f5f571f18f6ab0d8c311442e/httpcore-0.17.2-py3-none-any.whl", hash = "sha256:5581b9c12379c4288fe70f43c710d16060c10080617001e6b22a3b6dbcbefd36"},
+    {url = "https://files.pythonhosted.org/packages/b3/ad/7002a6f8e6ce0a246c991e00ba79b26ad06d307421a160214df24de5651f/httpcore-0.17.2.tar.gz", hash = "sha256:125f8375ab60036db632f34f4b627a9ad085048eef7cb7d2616fea0f739f98af"},
+]
+"httpx 0.24.1" = [
+    {url = "https://files.pythonhosted.org/packages/ec/91/e41f64f03d2a13aee7e8c819d82ee3aa7cdc484d18c0ae859742597d5aa0/httpx-0.24.1-py3-none-any.whl", hash = "sha256:06781eb9ac53cde990577af654bd990a4949de37a28bdb4a230d434f3a30b9bd"},
+    {url = "https://files.pythonhosted.org/packages/f8/2a/114d454cb77657dbf6a293e69390b96318930ace9cd96b51b99682493276/httpx-0.24.1.tar.gz", hash = "sha256:5853a43053df830c20f8110c5e69fe44d035d850b2dfe795e196f00fdb774bdd"},
 ]
 "idna 3.4" = [
     {url = "https://files.pythonhosted.org/packages/8b/e1/43beb3d38dba6cb420cefa297822eac205a277ab43e5ba5d5c46faf96438/idna-3.4.tar.gz", hash = "sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4"},
