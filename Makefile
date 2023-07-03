@@ -86,18 +86,18 @@ docker-full-check: clean-docker-containers docker-build-development
 	@docker run --name=$(DEVELOPMENT_CONTAINER) $(DEVELOPMENT_IMAGE) make full-check
 
 run:
-	poetry run uvicorn src.ssm_file_converter.app:app --host=0.0.0.0
+	pdm run uvicorn src.ssm_file_converter.app:app --host=0.0.0.0
 
 lint: 
-	poetry run flake8 ./src
-	poetry run flake8 ./tests	
+	pdm run flake8 ./src
+	pdm run flake8 ./tests	
 
 test:
-	poetry run pytest
+	pdm run pytest
 
 coverage:
-	poetry run coverage run --source src -m pytest
-	poetry run coverage report -m
-	poetry run coverage html
+	pdm run coverage run --source src -m pytest
+	pdm run coverage report -m
+	pdm run coverage html
 
 full-check: lint test coverage
