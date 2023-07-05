@@ -8,6 +8,29 @@ FILE_ARG = "upload_file"
 client = TestClient(app)
 
 
+def __test_convert_jsonld_to_abbreviated_json(
+    scidata_jsonld_file: pathlib.Path,
+    ssm_json_file: pathlib.Path,
+) -> None:
+    # target ssm json file
+    with open(ssm_json_file.absolute(), "rb") as f:
+        target = json.load(f)
+
+    # post jsonld file to convert to ssm json
+    with open(scidata_jsonld_file.absolute(), 'rb') as f:
+        files = {FILE_ARG: (scidata_jsonld_file.name, f)}
+        response = client.post("/convert/json", files=files)
+    assert response.status_code == 200
+    output = response.json()
+
+    # have to remove create and modified date since won't match
+    for key in ["created", "modified"]:
+        output.pop(key)
+        target.pop(key)
+
+    assert sorted(output.items()) == sorted(target.items())
+
+
 def test_convert() -> None:
     response = client.get("/convert")
     assert response.status_code == 200
@@ -145,43 +168,17 @@ def test_convert_jsonld_to_abbreviated_json_soddyite(
     raman_soddyite_scidata_jsonld_file: pathlib.Path,
     raman_soddyite_ssm_json_file: pathlib.Path,
 ) -> None:
-    # target ssm json file
-    with open(raman_soddyite_ssm_json_file.absolute(), "rb") as f:
-        target = json.load(f)
-
-    # post jsonld file to convert to ssm json
-    with open(raman_soddyite_scidata_jsonld_file.absolute(), 'rb') as f:
-        files = {FILE_ARG: (raman_soddyite_scidata_jsonld_file.name, f)}
-        response = client.post("/convert/json", files=files)
-    assert response.status_code == 200
-    output = response.json()
-
-    # have to remove create and modified date since won't match
-    for key in ["created", "modified"]:
-        output.pop(key)
-        target.pop(key)
-
-    assert sorted(output.items()) == sorted(target.items())
+    __test_convert_jsonld_to_abbreviated_json(
+        raman_soddyite_scidata_jsonld_file,
+        raman_soddyite_ssm_json_file
+    )
 
 
 def test_convert_jsonld_to_abbreviated_json_studtite(
     raman_studtite_scidata_jsonld_file: pathlib.Path,
     raman_studtite_ssm_json_file: pathlib.Path,
 ) -> None:
-    # target ssm json file
-    with open(raman_studtite_ssm_json_file.absolute(), "rb") as f:
-        target = json.load(f)
-
-    # post jsonld file to convert to ssm json
-    with open(raman_studtite_scidata_jsonld_file.absolute(), 'rb') as f:
-        files = {FILE_ARG: (raman_studtite_scidata_jsonld_file.name, f)}
-        response = client.post("/convert/json", files=files)
-    assert response.status_code == 200
-    output = response.json()
-
-    # have to remove create and modified date since won't match
-    for key in ["created", "modified"]:
-        output.pop(key)
-        target.pop(key)
-
-    assert sorted(output.items()) == sorted(target.items())
+    __test_convert_jsonld_to_abbreviated_json(
+        raman_studtite_scidata_jsonld_file,
+        raman_studtite_ssm_json_file
+    )
