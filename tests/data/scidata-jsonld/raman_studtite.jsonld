@@ -215,19 +215,19 @@
         "dataseries": [
           {
             "@id": "dataseries/1/",
-            "@type": "sdo:independent",
-            "label": "Wave Numbers (cm^-1)",
-            "axis": "x-axis",
-            "parameter": {
-              "@id": "dataseries/1/parameter/",
-              "@type": "sdo:parameter",
-              "quantity": "wavenumbers",
-              "property": "Wave Numbers",
-              "valuearray": {
-                "@id": "dataseries/1/parameter/valuearray/",
-                "@type": "sdo:valuearray",
+            "@type": "sdo:dataseries",
+            "label": "Raman Spectroscopy",
+            "parameter": [
+              {
+                "@id": "dataseries/1/parameter/1",
+                "@type": "sdo:parameter",
+                "quantity": "wavenumbers",
+                "property": "Wave Numbers",
+                "units": "1/cm",
+                "unitref": "qudt:PER-CentM",
+                "axis": "x-axis",
                 "datatype": "decimal",
-                "numberarray": [
+                "dataarray": [
                   1232.97168,
                   1231.891602,
                   1230.811523,
@@ -1159,7 +1159,7 @@
                   121.993164,
                   120.662109,
                   119.331055,
-                  118.0,
+                  118,
                   116.668945,
                   115.336914,
                   114.003906,
@@ -1243,26 +1243,16 @@
                   9.060547,
                   7.702148,
                   6.342773
-                ],
-                "unitref": "qudt:PER-CentM"
-              }
-            }
-          },
-          {
-            "@id": "dataseries/2/",
-            "@type": "sdo:dependent",
-            "label": "Intensity (Arbitrary Units)",
-            "axis": "y-axis",
-            "parameter": {
-              "@id": "dataseries/2/parameter/",
-              "@type": "sdo:parameter",
-              "quantity": "intensity",
-              "property": "Intensity",
-              "valuearray": {
-                "@id": "dataseries/2/parameter/valuearray/",
-                "@type": "sdo:valuearray",
+                ]
+              },
+              {
+                "@id": "dataseries/1/parameter/2",
+                "@type": "sdo:parameter",
+                "quantity": "intensity",
+                "property": "Intensity",
+                "axis": "y-axis",
                 "datatype": "decimal",
-                "numberarray": [
+                "dataarray": [
                   92.600517,
                   90.285507,
                   76.379944,
@@ -2280,7 +2270,7 @@
                   1129.418091
                 ]
               }
-            }
+            ]
           }
         ]
       },
