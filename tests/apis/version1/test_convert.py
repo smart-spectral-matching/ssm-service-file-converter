@@ -71,6 +71,7 @@ def __test_convert_abbreviated_json_to_jsonld(
         for key in checked_keys:
             assert output_ds.get(key) == target_ds.get(key)
 
+
 def test_convert() -> None:
     response = client.get("/convert")
     assert response.status_code == 200
@@ -169,7 +170,7 @@ def test_convert_jcamp_to_abbreviated_json(
 
 # SSM JSON -> SciData JSON-LD
 
-def test_convert_abbreviated_json_to_jsonld_soddyite(
+def test_convert_abbreviated_json_to_jsonld_raman_soddyite(
     raman_soddyite_ssm_json_file: pathlib.Path,
     raman_soddyite_scidata_jsonld_file: pathlib.Path,
 ) -> None:
@@ -178,8 +179,9 @@ def test_convert_abbreviated_json_to_jsonld_soddyite(
         raman_soddyite_scidata_jsonld_file,
     )
 
+
 @pytest.mark.skip("Failing in SciDataLib dataseries parsing...")
-def test_convert_abbreviated_json_to_jsonld_studtite(
+def test_convert_abbreviated_json_to_jsonld_raman_studtite(
     raman_studtite_ssm_json_file: pathlib.Path,
     raman_studtite_scidata_jsonld_file: pathlib.Path,
 ) -> None:
@@ -187,6 +189,18 @@ def test_convert_abbreviated_json_to_jsonld_studtite(
         raman_studtite_ssm_json_file,
         raman_studtite_scidata_jsonld_file,
     )
+
+
+@pytest.mark.skip("Failing in SciDataLib dataseries parsing...")
+def test_convert_abbreviated_json_to_jsonld_nmr_limonene(
+    nmr_limonene_ssm_json_file: pathlib.Path,
+    nmr_limonene_scidata_jsonld_file: pathlib.Path,
+) -> None:
+    __test_convert_abbreviated_json_to_jsonld(
+        nmr_limonene_ssm_json_file,
+        nmr_limonene_scidata_jsonld_file,
+    )
+
 
 # SciData JSON-LD -> SSM JSON
 
