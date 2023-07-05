@@ -76,8 +76,8 @@ def person_john_lennon_jsonld_file():
     """
     Simple JSON-LD of non-SciData-formatted data from SSM catalog test data
     """
-    p = pathlib.Path(TEST_DATA_DIR, "scidata-jsonld", "person_john_lennon.jsonld")
+    p = pathlib.Path(
+        TEST_DATA_DIR,
+        "scidata-jsonld",
+        "person_john_lennon.jsonld")
     return p
-
-
-
