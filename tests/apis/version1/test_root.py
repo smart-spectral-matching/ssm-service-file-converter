@@ -1,5 +1,6 @@
 from fastapi.testclient import TestClient
 
+from ssm_file_converter.version import __version__
 from ssm_file_converter import app
 
 client = TestClient(app)
@@ -10,7 +11,7 @@ def test_info():
     assert response.status_code == 200
     assert response.json() == {
         "name": "SSM File Converter Service",
-        "version": "0.0.0",
+        "version": __version__,
     }
 
 

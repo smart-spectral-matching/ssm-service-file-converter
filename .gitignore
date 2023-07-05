@@ -105,3 +105,4 @@ ENV/
 .vscode/
 
 *.swp
+.pdm-python

@@ -1,25 +1,47 @@
-[tool.poetry]
+[project]
 name = "ssm-file-converter"
-version = "0.1.0"
 description = ""
-authors = ["Marshall McDonnell <mcdonnellmt@ornl.gov>"]
+authors = [
+    {name = "Marshall McDonnell", email = "mcdonnellmt@ornl.gov"},
+]
+dependencies = [
+    "fastapi<1.0.0,>=0.74.1",
+    "uvicorn<1.0.0,>=0.15.0",
+    "pydantic<2.0.0,>=1.9.0",
+    "python-multipart<1.0.0,>=0.0.5",
+    "scidatalib==0.2.6a1",
+]
+requires-python = ">=3.8,<4.0"
+readme = "README.md"
+dynamic = ["version"]
+license = {text = "BSD 3-Clause"}
 
-[tool.poetry.dependencies]
-python = "^3.8"
-fastapi = "^0.74.1"
-uvicorn = "^0.15.0"
-pydantic = "^1.9.0"
-python-multipart = "^0.0.5"
-scidatalib = "0.2.6a1"
+[tool.pdm]
 
-[tool.poetry.dev-dependencies]
-pytest = "^5.2"
-mypy = "^0.910"
-flake8 = "^3.9.2"
-autoflake = "^1.4"
-requests = "^2.27.1"
-coverage = "^6.3.2"
+[tool.pdm.dev-dependencies]
+dev = [
+    "pytest<6.0,>=5.2",
+    "mypy<1.0,>=0.910",
+    "flake8<4.0.0,>=3.9.2",
+    "autoflake<2.0,>=1.4",
+    "requests<3.0.0,>=2.27.1",
+    "coverage<7.0.0,>=6.3.2",
+]
+test = [
+    "httpx>=0.24.1",
+]
+
+[tool.pdm.build]
+package-dir = "src"
+includes = []
+
+[tool.pdm.version]
+source = "file"
+path = "src/ssm_file_converter/version.py"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+
+
