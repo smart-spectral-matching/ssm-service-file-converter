@@ -19,12 +19,11 @@ def filename_to_scidata(filename: str) -> Union[SciData, None]:
     if file_extension == ".jsonld":
         with open(filename, "r") as f:
             data = json.load(f)
-            if "@graph" in data:
-                uid = data.get("@graph").get("uid", _DEFAULT_UID)
-            else:
-                uid = data.get("uid", _DEFAULT_UID)
+            uid = data.get("@graph").get("uid", _DEFAULT_UID)
             scidata = SciData(uid)
             scidata.meta = data
+            if "toc" not in scidata.meta["@graph"]:
+                scidata.meta["@graph"]["toc"] = list()
 
     if file_extension == ".rruff":
         scidata = scidatalib.io.rruff.read_rruff(filename)
