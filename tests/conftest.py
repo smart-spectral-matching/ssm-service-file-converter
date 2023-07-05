@@ -72,6 +72,15 @@ def nmr_limonene_scidata_jsonld_file():
 
 
 @pytest.fixture
+def nmr_limonene_ssm_json_file():
+    """
+    SSM abbreviated JSON conversion of Limonene
+    """
+    p = pathlib.Path(TEST_DATA_DIR, "ssm-json", "nmr_limonene.json")
+    return p
+
+
+@pytest.fixture
 def person_john_lennon_jsonld_file():
     """
     Simple JSON-LD of non-SciData-formatted data from SSM catalog test data

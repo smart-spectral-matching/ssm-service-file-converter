@@ -164,7 +164,7 @@ def test_convert_abbreviated_json_to_jsonld(
             assert output_ds.get(key) == target_ds.get(key)
 
 
-def test_convert_jsonld_to_abbreviated_json_soddyite(
+def test_convert_jsonld_to_abbreviated_json_raman_soddyite(
     raman_soddyite_scidata_jsonld_file: pathlib.Path,
     raman_soddyite_ssm_json_file: pathlib.Path,
 ) -> None:
@@ -174,11 +174,21 @@ def test_convert_jsonld_to_abbreviated_json_soddyite(
     )
 
 
-def test_convert_jsonld_to_abbreviated_json_studtite(
+def test_convert_jsonld_to_abbreviated_json_ramad_studtite(
     raman_studtite_scidata_jsonld_file: pathlib.Path,
     raman_studtite_ssm_json_file: pathlib.Path,
 ) -> None:
     __test_convert_jsonld_to_abbreviated_json(
         raman_studtite_scidata_jsonld_file,
         raman_studtite_ssm_json_file
+    )
+
+
+def test_convert_jsonld_to_abbreviated_json_nmr_limonene(
+    nmr_limonene_scidata_jsonld_file: pathlib.Path,
+    nmr_limonene_ssm_json_file: pathlib.Path,
+) -> None:
+    __test_convert_jsonld_to_abbreviated_json(
+        nmr_limonene_scidata_jsonld_file,
+        nmr_limonene_ssm_json_file
     )

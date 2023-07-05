@@ -1,396 +1,145 @@
 {
-    "@context": [
-        "https://stuchalk.github.io/scidata/contexts/scidata.jsonld",
-        "https://stuchalk.github.io/scidata/contexts/crg_measurement.jsonld",
+    "title": "R-(+)-Limonene (1H NMR)",
+    "url": "https://stuchalk.github.io/scidata/examples/nmr/",
+    "created": "07-05-23 20:00:30",
+    "modified": "07-05-23 20:00:30",
+    "description": "NMR spectrum of (+)-(r)-limonene",
+    "sources": [
         {
-            "sdo": "https://stuchalk.github.io/scidata/ontology/scidata.owl#",
-            "sub": "https://stuchalk.github.io/scidata/ontology/substance.owl#",
-            "chm": "https://stuchalk.github.io/scidata/ontology/chemical.owl#",
-            "w3i": "https://w3id.org/skgo/modsci#",
-            "cao": "https://champ.stuchalk.domains.unf.edu/images/ontology/cao.owl#",
-            "qudt": "https://qudt.org/vocab/unit/",
-            "obo": "http://purl.obolibrary.org/obo/",
-            "dct": "http://purl.org/dc/terms/"
-        },
-        {
-            "@base": "https://stuchalk.github.io/scidata/examples/nmr/"
+            "citation": "SpectraSchool Spectra Dataset, Royal Society of Chemistry",
+            "url": "https://www.rsc.org/learn-chemistry/collections/spectroscopy"
         }
     ],
-    "@id": "https://stuchalk.github.io/scidata/examples/nmr/",
-    "generatedAt": "2020-12-14 19:27:59",
-    "version": 2,
-    "@graph": {
-        "@id": "https://stuchalk.github.io/scidata/examples/nmr/",
-        "@type": "sdo:scidataFramework",
-        "uid": "scidata_example_nmr",
-        "title": "R-(+)-Limonene (1H NMR)",
-        "authors": [
+    "scidata": {
+        "property": "Nuclear Magnetic Resonance",
+        "methodology": {
+            "evaluationMethod": [
+                "experimental"
+            ],
+            "techniqueType#": "obo:CHMO_0000228",
+            "technique#": "obo:CHMO_0000591",
+            "instrumentType#": "300 MHz NMR",
+            "instrument#": "Unknown",
+            "settings": [
+                {
+                    "@id": "setting/1/",
+                    "@type": "sdo:setting",
+                    "quantitykind": "frequency",
+                    "quantity": "Observe Frequency",
+                    "value": {
+                        "@id": "setting/1/value/",
+                        "@type": "sdo:value",
+                        "number": "300.03180",
+                        "unit#": "qudt:MegaHZ"
+                    }
+                },
+                {
+                    "@id": "setting/2/",
+                    "@type": "sdo:setting",
+                    "quantitykind": "time",
+                    "quantity": "Acquisition Time",
+                    "value": {
+                        "@id": "setting/2/value/",
+                        "@type": "sdo:value",
+                        "number": "3.42098",
+                        "unit#": "qudt:SEC"
+                    }
+                },
+                {
+                    "@id": "setting/3/",
+                    "@type": "sdo:setting",
+                    "quantitykind": "count",
+                    "quantity": "Zero Fill",
+                    "value": {
+                        "@id": "setting/3/value/",
+                        "@type": "sdo:value",
+                        "number": 0
+                    }
+                },
+                {
+                    "@id": "setting/4/",
+                    "@type": "sdo:setting",
+                    "quantitykind": "parts per million (hz)",
+                    "quantity": "Shift Reference",
+                    "value": {
+                        "@id": "setting/4/value/",
+                        "text": "INTERNAL,  ,16384, -2.0163"
+                    }
+                },
+                {
+                    "@id": "setting/5/",
+                    "@type": "sdo:setting",
+                    "quantitykind": "enumerated value",
+                    "quantity": "Observe Nucleus",
+                    "value": {
+                        "@id": "setting/5/value/",
+                        "@type": "sdo:value",
+                        "text": "1H"
+                    }
+                },
+                {
+                    "@id": "setting/6/",
+                    "@type": "sdo:setting",
+                    "quantity": "enumerated value",
+                    "property": "Acquisition Mode",
+                    "value": {
+                        "@id": "setting/6/value/",
+                        "@type": "sdo:value",
+                        "text": "SIMULTANEOUS"
+                    }
+                },
+                {
+                    "@id": "setting/7/",
+                    "@type": "sdo:setting",
+                    "quantity": "identifier",
+                    "property": "Solvent Name",
+                    "value": {
+                        "@id": "setting/7/value/",
+                        "@type": "sdo:value",
+                        "text": "CHLOROFORM-d"
+                    }
+                }
+            ]
+        },
+        "system": {
+            "name": "(+)-(r)-limonene and Chloroform-d",
+            "formula": "CHCl3",
+            "molweight": "120.384",
+            "inchi": "InChI=1S/CHCl3/c2-1(3)4/h1H/i1D",
+            "inchikey": "HEDRZPFGACZZDS-MICDWDOJSA-N",
+            "iupacname": "trichloro(deuterio)methane",
+            "chebi": "obo:CHEBI_35255",
+            "description": "A mixture of two organic compounds",
+            "mixtype": [
+                "sub:homogeneousSolution",
+                "sub:binaryMixture"
+            ],
+            "phase": "sub:liquid",
+            "constituents": [
+                {
+                    "@id": "constituent/1/",
+                    "@type": "sdo:constituent",
+                    "scope": "substance/1/",
+                    "role": "chm:solute"
+                },
+                {
+                    "@id": "constituent/2/",
+                    "@type": "sdo:constituent",
+                    "scope": "substance/2/",
+                    "role": "chm:solvent"
+                }
+            ]
+        },
+        "dataseries": [
             {
-                "@id": "author/1/",
-                "@type": "dct:creator",
-                "name": "Bruker BioSpin GmbH"
-            }
-        ],
-        "description": "NMR spectrum of (+)-(r)-limonene",
-        "publisher": "Bruker BioSpin GmbH",
-        "permalink": "https://stuchalk.github.io/scidata/examples/nmr.jsonld",
-        "related": [
-            "https://stuchalk.github.io/scidata/examples/ri.jsonld",
-            "https://stuchalk.github.io/scidata/examples/ph.jsonld",
-            "https://stuchalk.github.io/scidata/examples/scf.jsonld"
-        ],
-        "keywords": [
-            "nuclear magnetic resonance",
-            "example data"
-        ],
-        "toc": [
-            "sdo:methodology",
-            "sdo:system",
-            "sdo:dataset",
-            "sdo:measurement",
-            "sdo:procedure",
-            "sdo:substance",
-            "sdo:compound",
-            "sdo:datagroup",
-            "sdo:dataseries",
-            "dct:source",
-            "dct:rights"
-        ],
-        "ids": [
-            "obo:CHMO_0000228",
-            "obo:CHMO_0000591",
-            "qudt:MegaHZ",
-            "qudt:SEC",
-            "w3i:Chemistry",
-            "w3i:AnalyticalChemistry",
-            "obo:CHEBI_15384",
-            "obo:CHEBI_35255",
-            "qudt:HZ"
-        ],
-        "scidata": {
-            "@id": "scidata/",
-            "@type": "sdo:scientificData",
-            "type": [
-                "property value"
-            ],
-            "property": [
-                "Nuclear Magnetic Resonance"
-            ],
-            "kind": [
-                "spectrum"
-            ],
-            "methodology": {
-                "@id": "methodology/",
-                "@type": "sdo:methodology",
-                "evaluation": [
-                    "experimental"
-                ],
-                "aspects": [
-                    {
-                        "@id": "measurement/1/",
-                        "@type": "cao:CAO_000152",
-                        "techniqueType#": "obo:CHMO_0000228",
-                        "technique#": "obo:CHMO_0000591",
-                        "instrumentType#": "300 MHz NMR",
-                        "instrument#": "Unknown",
-                        "settings": [
+                "x-axis": {
+                    "parameter": {
+                        "quantity": "Radiofrequency",
+                        "property": "Excitation frequency (Hz)",
+                        "datatype": "decimal",
+                        "numericValueArray": [
                             {
-                                "@id": "setting/1/",
-                                "@type": "sdo:setting",
-                                "quantitykind": "frequency",
-                                "quantity": "Observe Frequency",
-                                "value": {
-                                    "@id": "setting/1/value/",
-                                    "@type": "sdo:value",
-                                    "number": "300.03180",
-                                    "unit#": "qudt:MegaHZ"
-                                }
-                            },
-                            {
-                                "@id": "setting/2/",
-                                "@type": "sdo:setting",
-                                "quantitykind": "time",
-                                "quantity": "Acquisition Time",
-                                "value": {
-                                    "@id": "setting/2/value/",
-                                    "@type": "sdo:value",
-                                    "number": "3.42098",
-                                    "unit#": "qudt:SEC"
-                                }
-                            },
-                            {
-                                "@id": "setting/3/",
-                                "@type": "sdo:setting",
-                                "quantitykind": "count",
-                                "quantity": "Zero Fill",
-                                "value": {
-                                    "@id": "setting/3/value/",
-                                    "@type": "sdo:value",
-                                    "number": 0
-                                }
-                            },
-                            {
-                                "@id": "setting/4/",
-                                "@type": "sdo:setting",
-                                "quantitykind": "parts per million (hz)",
-                                "quantity": "Shift Reference",
-                                "value": {
-                                    "@id": "setting/4/value/",
-                                    "text": "INTERNAL,  ,16384, -2.0163"
-                                }
-                            },
-                            {
-                                "@id": "setting/5/",
-                                "@type": "sdo:setting",
-                                "quantitykind": "enumerated value",
-                                "quantity": "Observe Nucleus",
-                                "value": {
-                                    "@id": "setting/5/value/",
-                                    "@type": "sdo:value",
-                                    "text": "1H"
-                                }
-                            },
-                            {
-                                "@id": "setting/6/",
-                                "@type": "sdo:setting",
-                                "quantity": "enumerated value",
-                                "property": "Acquisition Mode",
-                                "value": {
-                                    "@id": "setting/6/value/",
-                                    "@type": "sdo:value",
-                                    "text": "SIMULTANEOUS"
-                                }
-                            },
-                            {
-                                "@id": "setting/7/",
-                                "@type": "sdo:setting",
-                                "quantity": "identifier",
-                                "property": "Solvent Name",
-                                "value": {
-                                    "@id": "setting/7/value/",
-                                    "@type": "sdo:value",
-                                    "text": "CHLOROFORM-d"
-                                }
-                            }
-                        ]
-                    }
-                ]
-            },
-            "system": {
-                "@id": "system/",
-                "@type": "sdo:system",
-                "discipline": "w3i:Chemistry",
-                "subdiscipline": "w3i:AnalyticalChemistry",
-                "facets": [
-                    {
-                        "@id": "substance/1/",
-                        "@type": "sdo:substance",
-                        "name": "(+)-(r)-limonene",
-                        "formula": "C10H16",
-                        "molweight": "136.234",
-                        "inchi": "InChI=1S/C10H16/c1-8(2)10-6-4-9(3)5-7-10/h4,10H,1,5-7H2,2-3H3/t10-/m0/s1",
-                        "inchikey": "XMGQYMWWDOXHJM-JTQLQIEISA-N",
-                        "iupacname": "(4R)-1-methyl-4-prop-1-en-2-ylcyclohexene",
-                        "chebi": "obo:CHEBI_15384"
-                    },
-                    {
-                        "@id": "substance/2/",
-                        "@type": "sdo:substance",
-                        "name": "Chloroform-d",
-                        "formula": "CHCl3",
-                        "molweight": "120.384",
-                        "inchi": "InChI=1S/CHCl3/c2-1(3)4/h1H/i1D",
-                        "inchikey": "HEDRZPFGACZZDS-MICDWDOJSA-N",
-                        "iupacname": "trichloro(deuterio)methane",
-                        "chebi": "obo:CHEBI_35255"
-                    },
-                    {
-                        "@id": "mixture/1/",
-                        "@type": "sdo:mixture",
-                        "name": "(+)-(r)-limonene and Chloroform-d",
-                        "description": "A mixture of two organic compounds",
-                        "mixtype": [
-                            "sub:homogeneousSolution",
-                            "sub:binaryMixture"
-                        ],
-                        "phase": "sub:liquid",
-                        "constituents": [
-                            {
-                                "@id": "constituent/1/",
-                                "@type": "sdo:constituent",
-                                "scope": "substance/1/",
-                                "role": "chm:solute"
-                            },
-                            {
-                                "@id": "constituent/2/",
-                                "@type": "sdo:constituent",
-                                "scope": "substance/2/",
-                                "role": "chm:solvent"
-                            }
-                        ]
-                    }
-                ]
-            },
-            "dataset": {
-                "@id": "dataset/",
-                "@type": "sdo:dataset",
-                "source": "measurement/1/",
-                "scope": "substance/1/",
-                "datagroup": [
-                    {
-                        "@id": "datagroup/1/",
-                        "@type": "sdo:datagroup",
-                        "type": "spectrum",
-                        "attributes": [
-                            {
-                                "@id": "attribute/1/",
-                                "@type": "sdo:attribute",
-                                "quantity": "count",
-                                "property": "Number of Data Points",
-                                "value": {
-                                    "@id": "value/",
-                                    "@type": "sdo:value",
-                                    "number": "16384"
-                                }
-                            },
-                            {
-                                "@id": "attribute/2/",
-                                "@type": "sdo:attribute",
-                                "quantity": "metric",
-                                "property": "First X-axis Value",
-                                "value": {
-                                    "@id": "value/",
-                                    "@type": "sdo:value",
-                                    "number": "4184.02539063",
-                                    "unit#": "qudt:HZ"
-                                }
-                            },
-                            {
-                                "@id": "attribute/3/",
-                                "@type": "sdo:attribute",
-                                "quantity": "metric",
-                                "property": "Last X-axis Value",
-                                "value": {
-                                    "@id": "value/",
-                                    "@type": "sdo:value",
-                                    "number": "-604.9543457",
-                                    "unit#": "qudt:HZ"
-                                }
-                            },
-                            {
-                                "@id": "attribute/4/",
-                                "@type": "sdo:attribute",
-                                "quantity": "metric",
-                                "property": "Maximum X-axis Value",
-                                "value": {
-                                    "@id": "value/",
-                                    "@type": "sdo:value",
-                                    "number": "4184.02539063",
-                                    "unit#": "qudt:HZ"
-                                }
-                            },
-                            {
-                                "@id": "attribute/5/",
-                                "@type": "sdo:attribute",
-                                "quantity": "metric",
-                                "property": "Minimum X-axis Value",
-                                "value": {
-                                    "@id": "value/",
-                                    "@type": "sdo:value",
-                                    "number": "-604.9543457",
-                                    "unit#": "qudt:HZ"
-                                }
-                            },
-                            {
-                                "@id": "attribute/6/",
-                                "@type": "sdo:attribute",
-                                "quantity": "metric",
-                                "property": "Maximum Y-axis Value",
-                                "value": {
-                                    "@id": "value/",
-                                    "@type": "sdo:value",
-                                    "number": "27493798"
-                                }
-                            },
-                            {
-                                "@id": "attribute/7/",
-                                "@type": "sdo:attribute",
-                                "quantity": "metric",
-                                "property": "Minimum Y-axis Value",
-                                "value": {
-                                    "@id": "value/",
-                                    "@type": "sdo:value",
-                                    "number": "-8613.375"
-                                }
-                            },
-                            {
-                                "@id": "attribute/8/",
-                                "@type": "sdo:attribute",
-                                "quantity": "metric",
-                                "property": "X-axis Scaling Factor",
-                                "value": {
-                                    "@id": "value/",
-                                    "@type": "sdo:value",
-                                    "number": "1"
-                                }
-                            },
-                            {
-                                "@id": "attribute/9/",
-                                "@type": "sdo:attribute",
-                                "quantity": "metric",
-                                "property": "Y-axis Scaling Factor",
-                                "value": {
-                                    "@id": "value/",
-                                    "@type": "sdo:value",
-                                    "number": "0.1"
-                                }
-                            },
-                            {
-                                "@id": "attribute/10/",
-                                "@type": "sdo:attribute",
-                                "quantity": "metric",
-                                "property": "First Y-axis Value",
-                                "value": {
-                                    "@id": "value/",
-                                    "@type": "sdo:value",
-                                    "number": "448.125"
-                                }
-                            },
-                            {
-                                "@id": "attribute/11/",
-                                "@type": "sdo:attribute",
-                                "quantity": "metric",
-                                "property": "X-axis Increment",
-                                "value": {
-                                    "@id": "value/",
-                                    "@type": "sdo:value",
-                                    "number": "-0.29231454",
-                                    "unit#": "qudt:HZ"
-                                }
-                            }
-                        ],
-                        "dataseries#": [
-                            "dataseries/1/",
-                            "dataseries/2/"
-                        ]
-                    }
-                ],
-                "dataseries": [
-                    {
-                        "@id": "dataseries/1/",
-                        "@type": "sdo:dataseries",
-                        "label": "Nuclear Magnetic Resonance",
-                        "parameter": [
-                            {
-                                "@id": "dataseries/1/parameter/1",
-                                "@type": "sdo:parameter",
-                                "quantitykind": "frequency",
-                                "quantity": "Radiofrequency",
-                                "property": "Excitation frequency (Hz)",
-                                "unit#": "qudt:HZ",
-                                "axis": "x-axis",
-                                "datatype": "decimal",
-                                "dataarray": [
+                                "numberArray": [
                                     4184,
                                     4183.70768546,
                                     4183.41537092,
@@ -16820,15 +16569,20 @@
                                     -617.55863404,
                                     -617.85094858
                                 ]
-                            },
+                            }
+                        ]
+                    }
+                },
+                "hasAxisType": "x-axis"
+            },
+            {
+                "y-axis": {
+                    "parameter": {
+                        "quantity": "Free Induction Decay",
+                        "datatype": "decimal",
+                        "numericValueArray": [
                             {
-                                "@id": "dataseries/1/parameter/2",
-                                "@type": "sdo:parameter",
-                                "quantitykind": "Voltage",
-                                "quantity": "Free Induction Decay",
-                                "axis": "y-axis",
-                                "datatype": "decimal",
-                                "dataarray": [
+                                "numberArray": [
                                     448.1,
                                     360.2,
                                     415.6,
@@ -33261,23 +33015,8 @@
                             }
                         ]
                     }
-                ]
-            }
-        },
-        "sources": [
-            {
-                "@id": "source/1/",
-                "@type": "dct:source",
-                "citation": "SpectraSchool Spectra Dataset, Royal Society of Chemistry",
-                "url": "https://www.rsc.org/learn-chemistry/collections/spectroscopy"
-            }
-        ],
-        "rights": [
-            {
-                "@id": "rights/1/",
-                "@type": "dct:rights",
-                "holder": "Chalk Group, Department of Chemistry, University of North Florida",
-                "license": "https://creativecommons.org/licenses/by-sa/4.0/"
+                },
+                "hasAxisType": "y-axis"
             }
         ]
     }
