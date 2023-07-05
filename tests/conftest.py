@@ -42,3 +42,42 @@ def raman_soddyite_ssm_json_file():
     """
     p = pathlib.Path(TEST_DATA_DIR, "ssm-json", "raman_soddyite.json")
     return p
+
+
+@pytest.fixture
+def raman_studtite_scidata_jsonld_file():
+    """
+    SciData JSON-LD of Studtite from SSM catalog test data
+    """
+    p = pathlib.Path(TEST_DATA_DIR, "scidata-jsonld", "raman_studtite.jsonld")
+    return p
+
+
+@pytest.fixture
+def raman_studtite_ssm_json_file():
+    """
+    SSM abbreviated JSON conversion of Studtite
+    """
+    p = pathlib.Path(TEST_DATA_DIR, "ssm-json", "raman_studtite.json")
+    return p
+
+
+@pytest.fixture
+def nmr_limonene_scidata_jsonld_file():
+    """
+    Simple SciData JSON-LD of Limonene from SSM catalog test data
+    """
+    p = pathlib.Path(TEST_DATA_DIR, "scidata-jsonld", "nmr_limonene.jsonld")
+    return p
+
+
+@pytest.fixture
+def person_john_lennon_jsonld_file():
+    """
+    Simple JSON-LD of non-SciData-formatted data from SSM catalog test data
+    """
+    p = pathlib.Path(TEST_DATA_DIR, "scidata-jsonld", "person_john_lennon.jsonld")
+    return p
+
+
+
