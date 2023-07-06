@@ -20,7 +20,7 @@ license = {text = "BSD 3-Clause"}
 
 [tool.pdm.dev-dependencies]
 dev = [
-    "pytest<6.0,>=5.2",
+    "pytest<8.0,>=6.2.5",
     "mypy<1.0,>=0.910",
     "flake8<4.0.0,>=3.9.2",
     "autoflake<2.0,>=1.4",

@@ -1,11 +1,75 @@
 from fastapi.testclient import TestClient
 import json
 import pathlib
+import pytest
 
 from ssm_file_converter import app
 
 FILE_ARG = "upload_file"
 client = TestClient(app)
+
+
+def __test_convert_jsonld_to_abbreviated_json(
+    scidata_jsonld_file: pathlib.Path,
+    ssm_json_file: pathlib.Path,
+) -> None:
+    """Test utility function for JSON-LD -> SSM JSON"""
+
+    # target ssm json file
+    with open(ssm_json_file.absolute(), "rb") as f:
+        target = json.load(f)
+
+    # post jsonld file to convert to ssm json
+    with open(scidata_jsonld_file.absolute(), 'rb') as f:
+        files = {FILE_ARG: (scidata_jsonld_file.name, f)}
+        response = client.post("/convert/json", files=files)
+    assert response.status_code == 200
+    output = response.json()
+
+    # have to remove create and modified date since won't match
+    for key in ["created", "modified"]:
+        output.pop(key)
+        target.pop(key)
+
+    assert sorted(output.items()) == sorted(target.items())
+
+
+def __test_convert_abbreviated_json_to_jsonld(
+    ssm_json_file: pathlib.Path,
+    scidata_jsonld_file: pathlib.Path,
+) -> None:
+    """Test utility function for SSM JSON -> JSON-LD"""
+    # target jsonld file
+    with open(scidata_jsonld_file.absolute(), 'rb') as f:
+        target = json.load(f)
+
+    # post ssm json file to convert to jsonld
+    with open(ssm_json_file.absolute(), "rb") as f:
+        files = {FILE_ARG: (ssm_json_file.name, f)}
+        response = client.post("/convert/jsonld", files=files)
+    assert response.status_code == 200
+    output = response.json()
+
+    # have to remove create and modified date since won't match
+    for key in ["generatedAt"]:
+        output.pop(key)
+        target.pop(key)
+
+    assert output.get("title") == target.get("title")
+
+    output_scidata = output.get("@graph").get("scidata")
+    target_scidata = target.get("@graph").get("scidata")
+
+    output_methodology = output_scidata.get("methodology")
+    target_methodology = target_scidata.get("methodology")
+    assert output_methodology == target_methodology
+
+    output_dataseries = output_scidata. get("dataset").get("dataseries")
+    target_dataseries = target_scidata.get("dataset").get("dataseries")
+    for output_ds, target_ds in zip(output_dataseries, target_dataseries):
+        checked_keys = [key for key in output_ds if key not in ["parameter"]]
+        for key in checked_keys:
+            assert output_ds.get(key) == target_ds.get(key)
 
 
 def test_convert() -> None:
@@ -104,61 +168,67 @@ def test_convert_jcamp_to_abbreviated_json(
     assert sorted(output.items()) == sorted(target.items())
 
 
-def test_convert_jsonld_to_abbreviated_json(
-    raman_soddyite_scidata_jsonld_file: pathlib.Path,
-    raman_soddyite_ssm_json_file: pathlib.Path,
-) -> None:
-    # target ssm json file
-    with open(raman_soddyite_ssm_json_file.absolute(), "rb") as f:
-        target = json.load(f)
+# SSM JSON -> SciData JSON-LD
 
-    # post jsonld file to convert to ssm json
-    with open(raman_soddyite_scidata_jsonld_file.absolute(), 'rb') as f:
-        files = {FILE_ARG: (raman_soddyite_scidata_jsonld_file.name, f)}
-        response = client.post("/convert/json", files=files)
-    assert response.status_code == 200
-    output = response.json()
-
-    # have to remove create and modified date since won't match
-    for key in ["created", "modified"]:
-        output.pop(key)
-        target.pop(key)
-
-    assert sorted(output.items()) == sorted(target.items())
-
-
-def test_convert_abbreviated_json_to_jsonld(
+def test_convert_abbreviated_json_to_jsonld_raman_soddyite(
     raman_soddyite_ssm_json_file: pathlib.Path,
     raman_soddyite_scidata_jsonld_file: pathlib.Path,
 ) -> None:
-    # target jsonld file
-    with open(raman_soddyite_scidata_jsonld_file.absolute(), 'rb') as f:
-        target = json.load(f)
+    __test_convert_abbreviated_json_to_jsonld(
+        raman_soddyite_ssm_json_file,
+        raman_soddyite_scidata_jsonld_file,
+    )
 
-    # post ssm json file to convert to jsonld
-    with open(raman_soddyite_ssm_json_file.absolute(), "rb") as f:
-        files = {FILE_ARG: (raman_soddyite_ssm_json_file.name, f)}
-        response = client.post("/convert/jsonld", files=files)
-    assert response.status_code == 200
-    output = response.json()
 
-    # have to remove create and modified date since won't match
-    for key in ["generatedAt"]:
-        output.pop(key)
-        target.pop(key)
+@pytest.mark.skip("Failing in SciDataLib dataseries parsing...")
+def test_convert_abbreviated_json_to_jsonld_raman_studtite(
+    raman_studtite_ssm_json_file: pathlib.Path,
+    raman_studtite_scidata_jsonld_file: pathlib.Path,
+) -> None:
+    __test_convert_abbreviated_json_to_jsonld(
+        raman_studtite_ssm_json_file,
+        raman_studtite_scidata_jsonld_file,
+    )
 
-    assert output.get("title") == target.get("title")
 
-    output_scidata = output.get("@graph").get("scidata")
-    target_scidata = target.get("@graph").get("scidata")
+@pytest.mark.skip("Failing in SciDataLib dataseries parsing...")
+def test_convert_abbreviated_json_to_jsonld_nmr_limonene(
+    nmr_limonene_ssm_json_file: pathlib.Path,
+    nmr_limonene_scidata_jsonld_file: pathlib.Path,
+) -> None:
+    __test_convert_abbreviated_json_to_jsonld(
+        nmr_limonene_ssm_json_file,
+        nmr_limonene_scidata_jsonld_file,
+    )
 
-    output_methodology = output_scidata.get("methodology")
-    target_methodology = target_scidata.get("methodology")
-    assert output_methodology == target_methodology
 
-    output_dataseries = output_scidata. get("dataset").get("dataseries")
-    target_dataseries = target_scidata.get("dataset").get("dataseries")
-    for output_ds, target_ds in zip(output_dataseries, target_dataseries):
-        checked_keys = [key for key in output_ds if key not in ["parameter"]]
-        for key in checked_keys:
-            assert output_ds.get(key) == target_ds.get(key)
+# SciData JSON-LD -> SSM JSON
+
+def test_convert_jsonld_to_abbreviated_json_raman_soddyite(
+    raman_soddyite_scidata_jsonld_file: pathlib.Path,
+    raman_soddyite_ssm_json_file: pathlib.Path,
+) -> None:
+    __test_convert_jsonld_to_abbreviated_json(
+        raman_soddyite_scidata_jsonld_file,
+        raman_soddyite_ssm_json_file
+    )
+
+
+def test_convert_jsonld_to_abbreviated_json_ramad_studtite(
+    raman_studtite_scidata_jsonld_file: pathlib.Path,
+    raman_studtite_ssm_json_file: pathlib.Path,
+) -> None:
+    __test_convert_jsonld_to_abbreviated_json(
+        raman_studtite_scidata_jsonld_file,
+        raman_studtite_ssm_json_file
+    )
+
+
+def test_convert_jsonld_to_abbreviated_json_nmr_limonene(
+    nmr_limonene_scidata_jsonld_file: pathlib.Path,
+    nmr_limonene_ssm_json_file: pathlib.Path,
+) -> None:
+    __test_convert_jsonld_to_abbreviated_json(
+        nmr_limonene_scidata_jsonld_file,
+        nmr_limonene_ssm_json_file
+    )

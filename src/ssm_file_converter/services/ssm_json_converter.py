@@ -176,9 +176,9 @@ def ssm_json_to_scidata(ssm_json: dict) -> SciData:
 
     if methodology:
         if "evaluationMethod" in methodology:
-            sd.evaulation(methodology.get("evaluationMethod"))
+            sd.evaluation(methodology.get("evaluationMethod"))
         elif "evaluation" in methodology:
-            sd.evaulation(methodology.get("evaluation"))
+            sd.evaluation(methodology.get("evaluation"))
 
         # aspects
         aspects = list()
@@ -190,8 +190,11 @@ def ssm_json_to_scidata(ssm_json: dict) -> SciData:
                 aspect["@type"] = "sdo:measurement"
 
         # technique aspect
+        technique = None
         if "techniqueType" in methodology:
             technique = methodology.get("techniqueType")
+
+        instrument = None
         if "instrument" in methodology:
             instrument = methodology.get("instrument")
 
