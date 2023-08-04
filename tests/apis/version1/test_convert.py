@@ -125,6 +125,9 @@ def test_convert_jcamp_to_jsonld(
         output.pop(key)
         target.pop(key)
 
+    # Removes system section from target since info not in JCAMP file
+    target["@graph"]["scidata"].pop("system")
+
     # Property isn't included so remove
     target["@graph"]["scidata"].pop("property")
 
@@ -156,6 +159,9 @@ def test_convert_jcamp_to_abbreviated_json(
     assert output_source == target_source
     target.pop("sources")
     output.pop("sources")
+
+    # Removes system section from target since info not in JCAMP file
+    target["scidata"].pop("system")
 
     # Property isn't included so remove
     target["scidata"].pop("property")

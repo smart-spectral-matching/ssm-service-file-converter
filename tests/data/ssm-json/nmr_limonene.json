@@ -102,32 +102,48 @@
             ]
         },
         "system": {
-            "name": "(+)-(r)-limonene and Chloroform-d",
-            "formula": "CHCl3",
-            "molweight": "120.384",
-            "inchi": "InChI=1S/CHCl3/c2-1(3)4/h1H/i1D",
-            "inchikey": "HEDRZPFGACZZDS-MICDWDOJSA-N",
-            "iupacname": "trichloro(deuterio)methane",
-            "chebi": "obo:CHEBI_35255",
-            "description": "A mixture of two organic compounds",
-            "mixtype": [
-                "sub:homogeneousSolution",
-                "sub:binaryMixture"
-            ],
-            "phase": "sub:liquid",
-            "constituents": [
-                {
-                    "@id": "constituent/1/",
-                    "@type": "sdo:constituent",
-                    "scope": "substance/1/",
-                    "role": "chm:solute"
-                },
-                {
-                    "@id": "constituent/2/",
-                    "@type": "sdo:constituent",
-                    "scope": "substance/2/",
-                    "role": "chm:solvent"
-                }
+            "mixture": {
+                "name": "(+)-(r)-limonene and Chloroform-d",
+                "description": "A mixture of two organic compounds",
+                "mixtype": [
+                    "sub:homogeneousSolution",
+                    "sub:binaryMixture"
+                ],
+                "phase": "sub:liquid",
+                "constituents": [
+                    {
+                        "@id": "constituent/1/",
+                        "@type": "sdo:constituent",
+                        "scope": "substance/1/",
+                        "role": "chm:solute"
+                    },
+                    {
+                        "@id": "constituent/2/",
+                        "@type": "sdo:constituent",
+                        "scope": "substance/2/",
+                        "role": "chm:solvent"
+                    }
+                ]
+            },
+            "substance": [
+              {
+                "name": "(+)-(r)-limonene",
+                "formula": "C10H16",
+                "molweight": "136.234",
+                "inchi": "InChI=1S/C10H16/c1-8(2)10-6-4-9(3)5-7-10/h4,10H,1,5-7H2,2-3H3/t10-/m0/s1",
+                "inchikey": "XMGQYMWWDOXHJM-JTQLQIEISA-N",
+                "iupacname": "(4R)-1-methyl-4-prop-1-en-2-ylcyclohexene",
+                "chebi": "obo:CHEBI_15384"
+              },
+              {
+                "name": "Chloroform-d",
+                "formula": "CHCl3",
+                "molweight": "120.384",
+                "inchi": "InChI=1S/CHCl3/c2-1(3)4/h1H/i1D",
+                "inchikey": "HEDRZPFGACZZDS-MICDWDOJSA-N",
+                "iupacname": "trichloro(deuterio)methane",
+                "chebi": "obo:CHEBI_35255"
+              }
             ]
         },
         "dataseries": [
