@@ -21,6 +21,40 @@
         "techniqueType": "cao:spectroscopy",
         "instrument": "Unknown"
       },
+      "system": {
+        "material": {
+          "name": "Soddyite",
+          "materialType": "(UO_2_)_2_SiO_4_&#183;2H_2_O"
+        },
+        "compound": {
+          "name": "soddyite",
+          "formula": "(UO2)2SiO4 · 2H2O"
+        },
+        "functionalgroup": [
+          {
+            "atoms": "U",
+            "multiplicity": 2
+          },
+          {
+            "atoms": "H2O",
+            "multiplicity": 2
+          },
+          {
+            "atoms": "SiO",
+            "multiplicity": 1
+          }
+        ],
+        "structuretype": {
+          "structure type": "framework"
+        },
+        "crystalsystem": {
+          "crystal system": "orthorhombic"
+        },
+        "coordinationchemistry": {
+          "uranium coordination chemistry": "pentagonal",
+          "multiplicity": 1
+        }
+      },
       "dataseries": [
         {
           "x-axis": {

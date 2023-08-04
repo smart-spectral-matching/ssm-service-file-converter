@@ -65,6 +65,58 @@
           }
         ]
       },
+      "system": {
+        "@id": "system/",
+        "@type": "sdo:system",
+        "facets": [
+          {
+            "@id": "material/1/",
+            "@type": "sdo:material",
+            "name": "Soddyite",
+            "materialType": "(UO_2_)_2_SiO_4_&#183;2H_2_O"
+          },
+          {
+            "@id": "compound/1/",
+            "@type": "sdo:compound",
+            "formula": "(UO2)2SiO4 · 2H2O",
+            "name": "soddyite"
+          },
+          {
+            "@id": "functionalgroup/1",
+            "@type": "sdo:molsystem",
+            "atoms": "U",
+            "multiplicity": 2
+          },
+          {
+            "@id": "functionalgroup/2",
+            "@type": "sdo:molsystem",
+            "atoms": "H2O",
+            "multiplicity": 2
+          },
+          {
+            "@id": "functionalgroup/3",
+            "@type": "sdo:molsystem",
+            "atoms": "SiO",
+            "multiplicity": 1
+          },
+          {
+            "@id": "structuretype/1/",
+            "@type": "sdo:value",
+            "structure type": "framework"
+          },
+          {
+            "@id": "crystalsystem/1/",
+            "@type": "sdo:value",
+            "crystal system": "orthorhombic"
+          },
+          {
+            "@id": "coordinationchemistry/2/",
+            "@type": "sdo:value",
+            "uranium coordination chemistry": "pentagonal",
+            "multiplicity": 1
+          }
+        ]
+      },
       "dataset": {
         "@id": "dataset/",
         "@type": "sdo:dataset",

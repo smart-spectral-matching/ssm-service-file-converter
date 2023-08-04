@@ -1,3 +1,5 @@
+import re
+
 from scidatalib.scidata import SciData
 
 
@@ -67,10 +69,33 @@ def scidata_to_ssm_json(scidata: SciData) -> dict:
         facets_list = system.get("facets", list())
         if facets_list:
             output_facet_list = list()
+
+            # Regular expression to pull out ID in JSON-LD for grouping
+            id_regex = re.compile('(.+?)/\d+')
+
             for facet in facets_list:
+                # Pull out ID, cleanup facet, add new format facet in output
+                id_match = id_regex.match(facet.get("@id"))
+                id = id_match.group(1)
+
                 facet.pop("@id")
                 facet.pop("@type")
-                output_facet_list.append(facet)
+
+                new_facet = {id: facet}
+
+                # Check if ID already in output
+                # If so, change from dict to list of dicts
+                for output_facet in output_facet_list:
+                    if id in output_facet.keys():
+                        value = output_facet.get(id)
+                        if isinstance(value, dict):
+                            new_facet = {id: [value] + [facet]}
+                        elif isinstance(value, list):
+                            new_facet = {id: value + [facet]}
+                        else:
+                            raise Exception(f"type of facet unhandled: {output_facet}")
+
+                output_facet_list.append(new_facet)
 
             if output_facet_list:
                 for facet_dict in output_facet_list:

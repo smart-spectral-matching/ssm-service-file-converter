@@ -37,8 +37,10 @@
       ]
     },
     "system": {
-      "name": "Studtite",
-      "materialType": "(UO2O2_4H2O)"
+      "material": {
+        "name": "Studtite",
+        "materialType": "(UO2O2_4H2O)"
+      }
     },
     "dataseries": [
       {
