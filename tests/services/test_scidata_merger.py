@@ -40,8 +40,17 @@ def create_json_file(data: dict) -> str:
 
 @pytest.fixture(name="jsonld_filename")
 def fixture_jsonld_filename(raman_soddyite_scidata_jsonld_file) -> str:
-    jsonld_filename = raman_soddyite_scidata_jsonld_file.absolute()
-    return jsonld_filename
+    with open(raman_soddyite_scidata_jsonld_file.absolute(), "r") as f:
+        data = json.load(f)
+    data.get("@graph").get("scidata").pop("system")
+    jsonld_file = tempfile.NamedTemporaryFile(
+        mode="w",
+        suffix=".jsonld",
+        delete=False
+    )
+    json.dump(data, jsonld_file)
+    jsonld_file.flush()
+    return jsonld_file.name
 
 
 def test_without_keys() -> None:
