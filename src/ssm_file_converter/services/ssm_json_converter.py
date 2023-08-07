@@ -153,7 +153,7 @@ def scidata_to_ssm_json(scidata: SciData) -> dict:
 
                         dataarray = parameter.get("dataarray", None)
                         if dataarray:
-                            dataarray = [ float(x) for x in dataarray ]
+                            dataarray = [float(x) for x in dataarray]
                             output_parameter["numericValueArray"] = [
                                 {"numberArray": dataarray}
                             ]
