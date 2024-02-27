@@ -258,8 +258,8 @@ def ssm_json_to_scidata(ssm_json: dict) -> SciData:
 
     dataseries_list = dataset.get("dataseries", None)
     if dataseries_list:
+        output_dataseries_list = list()
         for dataseries_json in dataseries_list:
-            output_dataseries_list = list()
             for axis, dataseries in dataseries_json.items():
                 # skip the non-axis dataseries (i.e. "hasAxisType" key)
                 if "-axis" not in axis:
