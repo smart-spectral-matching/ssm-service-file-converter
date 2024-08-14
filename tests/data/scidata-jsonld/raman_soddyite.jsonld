@@ -3,12 +3,6 @@
     "https://stuchalk.github.io/scidata/contexts/scidata.jsonld",
     {
       "sdo": "https://stuchalk.github.io/scidata/ontology/scidata.owl#",
-      "w3i": "https://w3id.org/skgo/modsci#",
-      "qudt": "http://qudt.org/vocab/unit/",
-      "obo": "http://purl.obolibrary.org/obo/",
-      "dc": "http://purl.org/dc/terms/",
-      "xsd": "http://www.w3.org/2001/XMLSchema#",
-      "sci": "https://stuchalk.github.io/scidata/ontology/scidata.owl#",
       "cao": "http://champ-project.org/images/ontology/cao.owl#"
     },
     {}
@@ -28,6 +22,15 @@
       }
     ],
     "description": "JCAMP-DX: None;XYDATA: (XY..XY)",
+    "ids": [
+        "cao:spectroscopy",
+        "dc:source",
+        "qudt:PER-CentiM",
+        "sdo:datagroup",
+        "sdo:measurement",
+        "w3i:AnalyticalChemistry",
+        "w3i:Chemistry"
+    ],
     "publisher": "RRUFF",
     "starttime": "05-23-22 17:28:54",
     "toc": [
@@ -50,12 +53,11 @@
       "property": [
         "raman spectroscopy"
       ],
-      "discipline": "w3i:Chemistry",
-      "subdiscipline": "w3i:AnalyticalChemistry",
+      "discipline#": "w3i:Chemistry",
+      "subdiscipline#": "w3i:AnalyticalChemistry",
       "methodology": {
         "@id": "methodology/",
         "@type": "sdo:methodology",
-        "evaluation": "",
         "aspects": [
           {
             "@id": "measurement/1/",
