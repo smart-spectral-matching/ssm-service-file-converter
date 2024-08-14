@@ -1,4 +1,4 @@
-FROM python:3.8 as production
+FROM python:3.8 AS production
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
@@ -17,10 +17,10 @@ RUN apt update \
 WORKDIR /usr/src/api
 EXPOSE 8000
 COPY . .
-RUN pdm install --prod
+RUN pdm install --no-lock --prod
 CMD ["/usr/src/api/.venv/bin/uvicorn", "src.ssm_file_converter.app:app", "--host=0.0.0.0"]
 
 # Development
-FROM production as development
-RUN pdm install -G:all
+FROM production AS development
+RUN pdm install --no-lock -G:all
 CMD ["pdm", "run", "uvicorn", "src.ssm_file_converter.app:app", "--host=0.0.0.0"]
