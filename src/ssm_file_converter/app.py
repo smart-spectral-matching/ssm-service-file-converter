@@ -11,11 +11,17 @@ def start_application():
         version=settings.project_version
     )
 
-    origin_regex = "http*://localhost*"
+    # TODO: make this general and come in from config, not hard-coded
+    origins = [
+        "http://localhost:8080",
+    ]
 
     app.add_middleware(
         CORSMiddleware,
-        allow_origin_regex=origin_regex,
+        allow_origins=origins,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
     )
     app.include_router(api_router)
     return app
