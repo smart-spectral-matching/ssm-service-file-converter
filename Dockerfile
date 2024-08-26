@@ -17,10 +17,11 @@ RUN apt update \
 WORKDIR /usr/src/api
 EXPOSE 8000
 COPY . .
-RUN pdm install --no-lock --prod
+RUN pdm install --prod
 CMD ["/usr/src/api/.venv/bin/uvicorn", "src.ssm_file_converter.app:app", "--host=0.0.0.0"]
 
 # Development
 FROM production AS development
+COPY . .
 RUN pdm install --no-lock -G:all
 CMD ["pdm", "run", "uvicorn", "src.ssm_file_converter.app:app", "--host=0.0.0.0"]
